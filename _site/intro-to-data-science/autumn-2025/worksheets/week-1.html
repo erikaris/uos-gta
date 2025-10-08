@@ -230,7 +230,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJ3YXJuaW5nIjpm
 
 
 ::: {.cell edit='false'}
-```hmizcz
+```wasnvp
 #| edit: false
 #| warning: false
 temperatures <-  read_csv("https://erikaris.github.io/uos-gta/datasets/tempnormals.csv") |>
@@ -249,7 +249,7 @@ temps_houston <- filter(temperatures, location == "Houston")
 We will first work with the dataset `temps_houston` which contains the average temperature for each day of the year for Houston, TX.
 
 ::: {.cell edit='false' autorun='true'}
-```hmizcz
+```wasnvp
 #| edit: false
 #| autorun: true
 temps_houston
@@ -265,7 +265,7 @@ Try this for yourself. Map the column `day_of_year` onto the x axis and the colu
 
 
 ::: {.cell exercise='ggplot'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot
 ggplot(temps_houston, aes(x = ___, y = ___)) +
   ___()
@@ -286,7 +286,7 @@ Try again. Now use `geom_point()` instead of `geom_line()`.
 
 
 ::: {.cell exercise='ggplot2'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot2
 ggplot(temps_houston, aes(x = ___, y = ___)) +
   ___()
@@ -307,7 +307,7 @@ And now swap which column you map to x and which to y.
 
 
 ::: {.cell exercise='ggplot3'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot3
 ggplot(temps_houston, aes(x = ___, y = ___)) +
   ___()
@@ -330,7 +330,7 @@ You can use other geoms to make different types of plots. For example, `geom_box
 
 
 ::: {.cell exercise='ggplot-boxplot'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-boxplot
 ggplot(temps_houston, aes(x = ___, y = ___)) +
   ___()
@@ -361,7 +361,7 @@ Now put the month on the y axis and the temperature on the x axis.
 
 
 ::: {.cell exercise='ggplot-boxplot2'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-boxplot2
 ggplot(___) +
   ___()
@@ -394,7 +394,7 @@ Next we will be working with the dataset `temperatures`, which is similar to `te
 
 
 ::: {.cell edit='false' autorun='true'}
-```hmizcz
+```wasnvp
 #| edit: false
 #| autorun: true
 temperatures
@@ -406,7 +406,7 @@ Make a line plot of `temperature` against `day_of_year`, using the `color` aesth
 
 
 ::: {.cell exercise='ggplot-color'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-color
 ggplot(temperatures, aes(x = ___, y = ___, color = ___)) +
   ___()
@@ -437,7 +437,7 @@ Try again, this time using `location` as the location along the y axis and `temp
 
 
 ::: {.cell exercise='ggplot-color2'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-color2
 ggplot(___) +
   ___()
@@ -471,7 +471,7 @@ Some geoms use a `fill` aesthetic, which is similar to `color` but applies to sh
 
 
 ::: {.cell exercise='ggplot-fill'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-fill
 ggplot(temperatures, ___) +
   ___()
@@ -501,7 +501,7 @@ Can you color the lines of the boxplot by location and the interior by month? Tr
 
 
 ::: {.cell exercise='ggplot-color-fill'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-color-fill
 ggplot(temperatures, ___) +
   ___()
@@ -536,7 +536,7 @@ Try this with the boxplot example from the previous section. Map `location` onto
 
 
 ::: {.cell exercise='ggplot-params'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-params
 ggplot(temperatures, ___) +
   ___()
@@ -567,7 +567,7 @@ Now do the reverse. Map `location` onto the line colors but fill the box with th
 
 
 ::: {.cell exercise='ggplot-params2'}
-```hmizcz
+```wasnvp
 #| exercise: ggplot-params2
 ggplot(temperatures, ___) +
   ___()
