@@ -1,0 +1,44 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "!datasets/"
+    - "!assignments/"
+    - "!apps/"
+  resources:
+    - "assets/"
+    - "datasets/"
+    - "assignments/"
+    - "apps/bin/"
+
+website:
+  title: "UoS GTA"
+  navbar:
+    left:
+      - text: Intro to Data Science
+        menu:
+          - sidebar:intro-to-data-science-autumn-2025
+      - about.qmd
+
+  sidebar: 
+    - id: intro-to-data-science-autumn-2025
+      title: "Autumn 2025"
+      collapse-level: 2
+      contents: 
+        - text: Syllabus
+          href: intro-to-data-science/autumn-2025/syllabus.qmd
+        - text: Slides
+          contents: intro-to-data-science/autumn-2025/slides/*.qmd
+        - text: Worksheets
+          contents: intro-to-data-science/autumn-2025/worksheets/*.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+
