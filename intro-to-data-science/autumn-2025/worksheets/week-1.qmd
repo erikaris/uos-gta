@@ -28,7 +28,7 @@ Next we set up the data.
 ```{webr}
 #| edit: false
 #| warning: false
-temperatures <-  read_csv("https://erikaris.github.io/uos-gta/datasets/tempnormals.csv") |>
+temperatures <-  read_csv("tempnormals.csv") |>
   mutate(
     location = factor(
       location, levels = c("Death Valley", "Houston", "San Diego", "Chicago")
