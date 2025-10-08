@@ -17,11 +17,12 @@ First we need to load the required R packages. Please wait a moment until the li
 
 ```{webr}
 #| warning: false
-#| edit: false
+#| edit: true
+#| autorun: false
 library(tidyverse)
 ```
 
-Next we set up the data.
+<!-- Next we set up the data.
 
 ```{webr}
 #| edit: false
@@ -330,4 +331,4 @@ ggplot(temperatures, aes(x = month, y = temperature, color = location)) +
   geom_boxplot(fill = "navyblue")
 ```
 :::
-:::
+::: -->
