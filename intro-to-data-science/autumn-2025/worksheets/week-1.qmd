@@ -1,5 +1,5 @@
 ---
-title: "Aesthetic mappings"
+title: "Week 1: Aesthetic mappings"
 author: "Erika Siregar"
 format: live-html
 engine: knitr
