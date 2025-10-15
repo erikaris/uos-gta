@@ -1,0 +1,285 @@
+---
+title: "Week 3: R / RStudio practicals"
+author: "Erika Siregar"
+format: live-html
+engine: knitr
+webr:
+  render-df: gt-interactive
+---
+
+{{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
+
+## R/RStudio Practical Part 1
+
+This worksheet contains a sequence of short examples and exercises that demonstrate basic R workflows: loading datasets, exploring data, making simple visualisations, importing data from files and the web, and working with JSON.
+
+```{webr}
+#| warning: false
+#| edit: false
+library(MASS)
+```
+
+Load the built-in "women" dataset that contains the height and weight of a sample of women and inspect it.
+
+```{webr}
+#| warning: false
+#| edit: false
+data()
+data("women")
+women
+names(women)
+str(women)
+summary(women)
+```
+
+Explore the distribution of a continuous variable using a histogram.
+
+```{webr}
+#| warning: false
+hist(women$height)
+```
+
+View the help page for hist to see what arguments you can modify.
+
+```{webr}
+#| warning: false
+?hist
+```
+
+Modify the histogram (example with custom breaks, title and x label).
+
+```{webr}
+#| warning: false
+hist(x = women$height, breaks = 4, main = "Histogram showing women's heights",
+		 xlab = "Height")
+```
+
+Display graphs side-by-side (set plotting area to 1 row and 2 columns), then show two histograms.
+
+```{webr}
+#| warning: false
+par(mfrow = c(1, 2))
+hist(x = women$height, breaks = 4, main = "Heights", xlab = "Height")
+hist(x = women$weight, breaks = 2, main = "Weights", xlab = "Weight")
+```
+
+To display one graph at a time you can reset the plotting area (example command shown) and then plot the dataset.
+
+```{webr}
+#| warning: false
+par(mfrow = c(1, 1))
+plot(women)
+```
+
+## Importing data into R / RStudio
+
+View available datasets and load the tidyverse. Then read example TSV/CSV files. The examples below show different read_* options, including forcing no header and specifying column types.
+
+```{webr}
+#| warning: false
+data()
+library(tidyverse)
+testFile <- read_tsv("./test.tsv")
+testFile
+
+# Read without header
+testFile <- read_tsv("test.tsv", col_names = FALSE)
+testFile
+
+testCSVFile <- read_csv("freeschoolmeals.csv")
+head(testCSVFile)
+
+# Impose column types explicitly
+testCSVFile <- read_csv("freeschoolmeals.csv", col_types = "cciici")
+head(testCSVFile)
+
+# Read Excel files with readxl
+library(readxl)
+excelFile <- file.path("indicator hiv estimated prevalence% 15-49.xlsx")
+testExcelFile <- read_excel(excelFile, sheet = "Data")
+head(testExcelFile)
+```
+
+Exercise prompt: Using the visualisations you saw previously, explore the two datasets you have loaded (the free school meals and the HIV prevalence). For example, compare the distribution of HIV prevalence across different years using side-by-side histograms.
+
+```{webr}
+#| warning: false
+# Example solution (base R)
+year1 <- "2000.0"
+year2 <- "2010"
+hiv_two_years <- testExcelFile[, c("Estimated HIV Prevalence% - (Ages 15-49)", year1, year2)]
+names(hiv_two_years) <- c("Country", "Year1", "Year2")
+
+# Keep only rows where at least one of the two years has a value
+hiv_two_years <- hiv_two_years[!(is.na(hiv_two_years$Year1) & !is.na(hiv_two_years$Year2)), ]
+
+par(mfrow = c(1, 2))
+hist(hiv_two_years$Year1,
+		 main = paste("HIV Prevalence in", gsub("\\.0", "", year1)),
+		 xlab = "HIV Prevalence (%)",
+		 col = "skyblue", border = "white")
+
+hist(as.numeric(hiv_two_years$Year2),
+		 main = paste("HIV Prevalence in", year2),
+		 xlab = "HIV Prevalence (%)",
+		 col = "salmon", border = "white")
+```
+
+Erika's ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.
+
+```{webr}
+#| warning: false
+library(tidyverse)
+years <- c("2000.0", "2001.0", "2002.0", "2003.0", "2004.0")
+hiv_multi_years <- testExcelFile[, c("Estimated HIV Prevalence% - (Ages 15-49)", years)]
+names(hiv_multi_years) <- c("Country", "Y2000", "Y2001", "Y2002", "Y2003", "Y2004")
+hiv_multi_years[,-1] <- lapply(hiv_multi_years[,-1], as.numeric)
+hiv_multi_years <- hiv_multi_years[rowSums(is.na(hiv_multi_years[,-1])) < length(years), ]
+
+hiv_long <- pivot_longer(hiv_multi_years, cols = -Country, names_to = "Year", values_to = "Prevalence")
+
+ggplot(hiv_long, aes(x = Prevalence, fill = Year)) +
+	geom_histogram(bins = 15, color = "white") +
+	facet_wrap(~ Year, ncol = 2, scales = "free_y") +
+	labs(title = "Distribution of HIV Prevalence by Year",
+			 x = "HIV Prevalence (%)",
+			 y = "Number of Countries") +
+	theme_minimal(base_size = 12) +
+	theme(legend.position = "none")
+
+ggplot(hiv_long, aes(x = Prevalence, y = Year, fill = Year)) +
+	geom_boxplot() +
+	labs(title = "HIV Prevalence by Year",
+			 x = "HIV Prevalence (%)",
+			 y = "Year") +
+	theme_minimal(base_size = 12) +
+	theme(legend.position = "none")
+```
+
+## Read HTML and XML data
+
+Install and load the `rvest` package, then read a Wikipedia page and extract headings, paragraphs, links, tables and images as examples of web scraping.
+
+```{webr}
+#| warning: false
+install.packages("rvest")
+library(rvest)
+
+url <- "https://en.wikipedia.org/wiki/Sheffield"
+wikiPage <- read_html(url)
+wikiPage
+
+h2Sections <- wikiPage %>% html_nodes("h2")
+h2Sections
+h2Sections[1]
+h2Sections[2]
+h2Sections[1:2]
+h2Sections %>% html_text()
+
+pageText <- wikiPage %>%
+	html_nodes("p") %>%
+	html_text()
+
+pageText[1]
+pageText[2]
+```
+
+Erika's addition: a short pipeline to extract h2 headers, paragraphs, links (text + href), tables, images, and subsections; show simple cleaning with stringr and an example of extracting paragraphs following the first h2.
+
+```{webr}
+#| warning: false
+url <- "https://en.wikipedia.org/wiki/Sheffield"
+wikiPage <- read_html(url)
+
+h2Sections <- wikiPage %>% html_elements("h2") %>% html_text()
+h2Sections
+
+paragraphs <- wikiPage %>% html_elements("p") %>% html_text()
+head(paragraphs, 5)
+
+links <- wikiPage %>% html_elements("a")
+link_text <- links %>% html_text()
+link_href <- links %>% html_attr("href")
+link_data <- tibble(text = link_text, url = link_href)
+head(link_data, 10)
+
+tables <- wikiPage %>% html_elements("table")
+length(tables)
+if (length(tables) > 0) {
+	table1 <- tables[[1]] %>% html_table(fill = TRUE)
+	head(table1)
+}
+
+images <- wikiPage %>% html_elements("img")
+img_src <- images %>% html_attr("src")
+head(img_src, 10)
+
+h3Sections <- wikiPage %>% html_elements("h3") %>% html_text()
+h3Sections
+
+library(stringr)
+paragraphs_clean <- str_squish(paragraphs)
+h2Sections_clean <- str_squish(h2Sections)
+
+first_h2 <- wikiPage %>% html_elements("h2") %>% .[1]
+first_h2_paras <- first_h2 %>% html_elements(xpath = "following-sibling::p") %>% html_text()
+head(first_h2_paras, 3)
+```
+
+## Read JSON data
+
+Install and load `jsonlite`, parse a small JSON string, roundtrip to JSON, and demonstrate reading a remote JSON resource (Citibike station information). Then explore the list/dataframe structure and make plots from flattened data.
+
+```{webr}
+#| warning: false
+install.packages("jsonlite")
+library(jsonlite)
+
+json <- '[
+					{"Name": "Mario", "Age": 32, "Occupation": "Plumber"},
+					{"Name": "Peach", "Age": 21, "Occupation": "Princess"},
+					{},
+					{"Name": "Bowser", "Occupation": "Koopa"}
+				]'
+
+mydf <- fromJSON(json)
+mydf
+myjson <- toJSON(mydf)
+myjson
+toJSON(fromJSON(json), pretty = TRUE, auto_unbox = TRUE)
+
+citibike <- fromJSON("https://gbfs.citibikenyc.com/gbfs/en/station_information.json")
+str(citibike$data)
+stations <- citibike$data$stations$name
+stations
+
+citibike_flat <- fromJSON("https://gbfs.citibikenyc.com/gbfs/en/station_information.json", flatten = TRUE)
+stations_flat <- citibike_flat$data$stations
+stations_plot <- stations_flat %>%
+	select(name, capacity, has_kiosk)
+
+ggplot(stations_plot, aes(x = capacity)) +
+	geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
+	labs(title = "Distribution of Station Capacities",
+			 x = "Number of Docks (Capacity)",
+			 y = "Count of Stations") +
+	theme_minimal()
+
+ggplot(stations_plot, aes(x = capacity, fill = has_kiosk)) +
+	geom_histogram(position = "dodge", binwidth = 5) +
+	labs(title = "Station Capacities by Kiosk Availability",
+			 x = "Number of Docks (Capacity)",
+			 y = "Count of Stations",
+			 fill = "Has Kiosk") +
+	theme_minimal()
+```
+
+## Additional info
+
+Check and increase how many elements R will print to the console.
+
+```{webr}
+#| warning: false
+getOption("max.print")
+options(max.print = 1000)
+```
