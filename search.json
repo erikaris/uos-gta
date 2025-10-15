@@ -26,7 +26,7 @@
     "href": "intro-to-data-science/autumn-2025/worksheets/week-3.html#importing-data-into-r-rstudio",
     "title": "Week 3: R / RStudio practicals",
     "section": "Importing data into R / RStudio",
-    "text": "Importing data into R / RStudio\nView available datasets and load the tidyverse. Then read example TSV/CSV files. The examples below show different read_* options, including forcing no header and specifying column types.\n\n\n\n\n\n\n\n\nExercise prompt: Using the visualisations you saw previously, explore the two datasets you have loaded (the free school meals and the HIV prevalence). For example, compare the distribution of HIV prevalence across different years using side-by-side histograms.\n\n\n\n\n\n\n\n\nErika’s ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.",
+    "text": "Importing data into R / RStudio\nView available datasets and load the tidyverse. Then read example TSV/CSV files. The examples below show different read_* options, including forcing no header and specifying column types.\n\n\n\n\n\n\n\n\n\nExercise\nUsing the visualisations you saw previously, explore the two datasets you have loaded (the free school meals and the HIV prevalence). For example, compare the distribution of HIV prevalence across different years using side-by-side histograms.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nErika’s ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.",
     "crumbs": [
       "Worksheets",
       "Week 3: R / RStudio practicals"
@@ -48,7 +48,7 @@
     "href": "intro-to-data-science/autumn-2025/worksheets/week-3.html#read-json-data",
     "title": "Week 3: R / RStudio practicals",
     "section": "Read JSON data",
-    "text": "Read JSON data\nInstall and load jsonlite, parse a small JSON string, roundtrip to JSON, and demonstrate reading a remote JSON resource (Citibike station information). Then explore the list/dataframe structure and make plots from flattened data.",
+    "text": "Read JSON data\nInstall and load jsonlite, parse a small JSON string, roundtrip to JSON, and demonstrate reading a remote JSON resource (Citibike station information). Then explore the list/dataframe structure and make plots from flattened data.\n\n\n\n\n\n\n\n\n\nExercise\nUsing the visualisations you have learned, show the distribution of available bikes and compare the number of available docks to the number of total docks (notice these are columns inside a dataframe that is inside a list).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution",
     "crumbs": [
       "Worksheets",
       "Week 3: R / RStudio practicals"
