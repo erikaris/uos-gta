@@ -141,10 +141,11 @@ hist(as.numeric(hiv_two_years$Year2),
 :::
 :::
 
-Erika's ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.
-
 ```{webr}
 #| warning: false
+#| include: false
+# Erika's ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.
+
 library(tidyverse)
 years <- c("2000.0", "2001.0", "2002.0", "2003.0", "2004.0")
 hiv_multi_years <- testExcelFile[, c("Estimated HIV Prevalence% - (Ages 15-49)", years)]
