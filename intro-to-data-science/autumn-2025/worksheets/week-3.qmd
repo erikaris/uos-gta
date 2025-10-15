@@ -5,6 +5,10 @@ format: live-html
 engine: knitr
 webr:
   render-df: gt-interactive
+  resources:
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/freeschoolmeals.csv
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/indicator hiv estimated prevalence% 15-49.xlsx
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/test.tsv
 ---
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
@@ -79,7 +83,7 @@ View available datasets and load the tidyverse. Then read example TSV/CSV files.
 #| warning: false
 data()
 library(tidyverse)
-testFile <- read_tsv("./test.tsv")
+testFile <- read_tsv("test.tsv")
 testFile
 
 # Read without header
