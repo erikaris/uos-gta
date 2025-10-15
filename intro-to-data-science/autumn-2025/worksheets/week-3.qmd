@@ -99,7 +99,7 @@ head(testCSVFile)
 
 # Read Excel files with readxl
 library(readxl)
-excelFile <- file.path("indicator hiv estimated prevalence% 15-49.xlsx")
+excelFile <- file.path("indicator%20hiv%20estimated%20prevalence%25%2015-49.xlsx")
 testExcelFile <- read_excel(excelFile, sheet = "Data")
 head(testExcelFile)
 ```
