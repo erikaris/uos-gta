@@ -204,7 +204,6 @@ pageText[2]
 #| include: false
 #| warning: false
 # Erika's addition: a short pipeline to extract h2 headers, paragraphs, links (text + href), tables, images, and subsections; show simple cleaning with stringr and an example of extracting paragraphs following the first h2.
-
 url <- "https://en.wikipedia.org/wiki/Sheffield"
 wikiPage <- read_html(url)
 
