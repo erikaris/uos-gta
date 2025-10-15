@@ -37,7 +37,7 @@
     "href": "intro-to-data-science/autumn-2025/worksheets/week-3.html#read-html-and-xml-data",
     "title": "Week 3: R / RStudio practicals",
     "section": "Read HTML and XML data",
-    "text": "Read HTML and XML data\nInstall and load the rvest package, then read a Wikipedia page and extract headings, paragraphs, links, tables and images as examples of web scraping.\n\n\n\n\n\n\n\n\nErika’s addition: a short pipeline to extract h2 headers, paragraphs, links (text + href), tables, images, and subsections; show simple cleaning with stringr and an example of extracting paragraphs following the first h2.",
+    "text": "Read HTML and XML data\nInstall and load the rvest package, then read a Wikipedia page and extract headings, paragraphs, links, tables and images as examples of web scraping.",
     "crumbs": [
       "Worksheets",
       "Week 3: R / RStudio practicals"
