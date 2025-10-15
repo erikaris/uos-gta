@@ -19,7 +19,6 @@ This worksheet contains a sequence of short examples and exercises that demonstr
 
 ```{webr}
 #| warning: false
-#| edit: false
 library(MASS)
 ```
 
@@ -27,7 +26,6 @@ Load the built-in "women" dataset that contains the height and weight of a sampl
 
 ```{webr}
 #| warning: false
-#| edit: false
 data()
 data("women")
 women
@@ -104,8 +102,20 @@ testExcelFile <- read_excel(excelFile, sheet = "Data")
 head(testExcelFile)
 ```
 
-Exercise prompt: Using the visualisations you saw previously, explore the two datasets you have loaded (the free school meals and the HIV prevalence). For example, compare the distribution of HIV prevalence across different years using side-by-side histograms.
+### Exercise
 
+Using the visualisations you saw previously, explore the two datasets you have loaded (the free school meals and the HIV prevalence). For example, compare the distribution of HIV prevalence across different years using side-by-side histograms.
+
+```{webr} 
+#| exercise: hist-y1-y2
+hiv_two_years <- testExcelFile[, c("Estimated HIV Prevalence% - (Ages 15-49)", ___, ___)]
+
+hist(___)
+hist(___)
+```
+
+::: { .solution exercise="hist-y1-y2-hidden" }
+::: { .callout-tip title="Solution" collapse="false"}
 ```{webr}
 #| warning: false
 # Example solution (base R)
@@ -128,6 +138,8 @@ hist(as.numeric(hiv_two_years$Year2),
 		 xlab = "HIV Prevalence (%)",
 		 col = "salmon", border = "white")
 ```
+:::
+:::
 
 Erika's ggplot-based solution: pick several year columns, reshape to long format, and then make histograms and boxplots faceted by year.
 
@@ -256,7 +268,25 @@ citibike <- fromJSON("https://gbfs.citibikenyc.com/gbfs/en/station_information.j
 str(citibike$data)
 stations <- citibike$data$stations$name
 stations
+```
 
+### Exercise
+
+Using the visualisations you have learned, show the distribution of available bikes and compare the number of available docks to the number of total docks (notice these are columns inside a dataframe that is inside a list).
+
+```{webr} 
+#| exercise: ggplot-comp
+citibike_flat <- fromJSON(___)
+
+ggplot(___)
+ggplot(___)
+```
+
+::: { .solution exercise="ggplot-comp-hidden" }
+::: { .callout-tip title="Solution" collapse="false"}
+```{webr}
+#| warning: false
+# Example solution (base R)
 citibike_flat <- fromJSON("https://gbfs.citibikenyc.com/gbfs/en/station_information.json", flatten = TRUE)
 stations_flat <- citibike_flat$data$stations
 stations_plot <- stations_flat %>%
@@ -277,6 +307,8 @@ ggplot(stations_plot, aes(x = capacity, fill = has_kiosk)) +
 			 fill = "Has Kiosk") +
 	theme_minimal()
 ```
+:::
+:::
 
 ## Additional info
 
