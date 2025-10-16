@@ -383,4 +383,93 @@ planets_tree
 * `[]` when we need **a collection of items** (like many planets).
 
 ---
+## III. Graph construction
+
+### **1. Initialization of `graph`**
+
+At the beginning, we have:
+
+```python
+graph = {}  # empty dictionary
+```
+
+* Nothing is in it yet.
+* Keys (nodes) and their adjacency lists will be **added as we iterate**.
+
+---
+
+### **2. Adding a node**
+
+Inside the loop:
+
+```python
+if node not in graph:
+    graph[node] = []
+```
+
+* This ensures that the **current node** exists in the dictionary.
+* Its value is an empty list (`[]`) for neighbors.
+
+---
+
+### **3. What about `other_node`?**
+
+Later we loop over all **existing nodes**:
+
+```python
+for other_node in graph:
+```
+
+* Here’s the key: **`other_node` is already a key in `graph`**.
+* That’s why `graph[other_node]` exists — because we are looping over **nodes already added**.
+
+---
+### **4. Why it’s safe**
+
+```python
+if node not in graph[other_node]:
+    graph[other_node].append(node)
+```
+
+* At this point, `other_node` **already exists in the dictionary** because it was added in an **earlier iteration** of the outer loop:
+
+```python
+if node not in graph:
+    graph[node] = []
+```
+
+* So every `other_node` in `for other_node in graph:` is guaranteed to have a list.
+
+---
+
+### **5. Visual explanation**
+
+Imagine we iterate through 3 planets:
+
+1. `node = A_2006` → added to graph:
+
+```
+graph = { 'A_2006': [] }
+```
+
+2. `node = B_2006` → added to graph:
+
+```
+graph = { 'A_2006': [], 'B_2006': [] }
+```
+
+* Now when we do:
+
+```python
+for other_node in graph:
+```
+
+* `other_node` first takes `'A_2006'`
+* `graph[other_node]` exists → we can safely append `B_2006` to it
+
+---
+**Key point:** We never explicitly “define” `graph[other_node]` for future nodes — it already exists because the loop `for other_node in graph:` only iterates over keys **already added** to the dictionary.
+
+---
+
 
