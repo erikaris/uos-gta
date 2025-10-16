@@ -1,4 +1,4 @@
-### Syntax
+## df.to_dict()
 
 ```python
 df.to_dict(orient=...)
