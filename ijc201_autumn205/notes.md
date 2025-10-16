@@ -351,7 +351,7 @@ So:
 
 ---
 
-### ⚖️ Quick comparison
+### Quick comparison
 
 | Structure         | Example                      | Good for?                                                             |
 | ----------------- | ---------------------------- | --------------------------------------------------------------------- |
@@ -383,7 +383,82 @@ planets_tree
 * `[]` when we need **a collection of items** (like many planets).
 
 ---
-## III. Graph construction
+## III. Understanding Graph
+Great question! Let’s break it down carefully.
+
+---
+
+### **1. What is `graph`?**
+
+`graph` is a **dictionary** where:
+
+* Keys = nodes (e.g., `"Radial Velocity_2006"`)
+* Values = adjacency lists (lists of connected nodes)
+
+Example:
+
+```python
+graph = {
+    "A_2006": ["B_2006", "C_2008"],
+    "B_2006": ["A_2006"],
+    "C_2008": ["A_2006"]
+}
+```
+
+---
+
+### **2. What does `.items()` do?**
+
+* `.items()` is a **dictionary method** that returns **all key-value pairs** as tuples: `(key, value)`
+
+Example:
+
+```python
+graph.items()
+# Output: dict_items([
+#   ("A_2006", ["B_2006", "C_2008"]),
+#   ("B_2006", ["A_2006"]),
+#   ("C_2008", ["A_2006"])
+# ])
+```
+
+* Each element is a **tuple**: `(node, connections)`
+
+---
+
+### **3. How the for-loop works**
+
+```python
+for node, connections in graph.items():
+    print(node, connections)
+```
+
+* Iterates over each key-value pair in the dictionary
+* `node` → gets the key (e.g., `"A_2006"`)
+* `connections` → gets the value (e.g., `["B_2006", "C_2008"]`)
+
+Output for the example above:
+
+```
+A_2006 ['B_2006', 'C_2008']
+B_2006 ['A_2006']
+C_2008 ['A_2006']
+```
+
+---
+
+**Key point:** `.items()` is used when you need **both the keys and their values** in the loop.
+
+* If you used `for node in graph:`, you’d only get the keys, not the adjacency lists.
+
+---
+
+If you want, I can make a **tiny textual diagram showing how the loop iterates over the graph adjacency list**, which makes it much easier to visualize.
+
+Do you want me to do that?
+
+---
+## IV. Graph construction
 
 ### **1. Initialization of `graph`**
 
