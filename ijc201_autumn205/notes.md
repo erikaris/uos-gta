@@ -1,3 +1,5 @@
+# IJC201 - Week 3 Notes - 16th October 2025
+
 ## df.to_dict()
 
 ```python
@@ -65,4 +67,114 @@ df.to_dict('index')
 * **Row-oriented:** `'records'`, `'index'`
 * **Column-oriented:** `'dict'`, `'list'`, `'series'`
 * **Full structure:** `'split'` (useful for saving/reconstructing DataFrames)
+
+---
+
+Perfect 🌳 — let’s look at a **side-by-side example** showing the **two approaches** — one using the **DataFrame directly**, and one using the **list of dictionaries**.
+
+We’ll use a tiny mock dataset to keep it clear.
+
+---
+
+### 🧩 Example Data
+
+```python
+import pandas as pd
+
+# Small sample dataset
+planets_df = pd.DataFrame({
+    'method': ['Radial Velocity', 'Radial Velocity', 'Transit'],
+    'year': [2006, 2008, 2011],
+    'orbital_period': [269.3, 874.8, 3.5],
+    'mass': [7.1, 2.3, 0.02],
+    'distance': [77.4, 56.2, 420.3]
+})
+```
+
+---
+
+## Tree Building: Directly from dataframe vs converting to dictionary first. 
+### 1. Building the Tree **Directly from the DataFrame**
+
+```python
+planets_tree_df = {}
+
+for _, row in planets_df.iterrows():  # iterrows() gives each row as a Series
+    method = row['method']
+    year = row['year']
+    planet_details = {
+        'orbital_period': row['orbital_period'],
+        'mass': row['mass'],
+        'distance': row['distance']
+    }
+
+    if method not in planets_tree_df:
+        planets_tree_df[method] = {}
+    if year not in planets_tree_df[method]:
+        planets_tree_df[method][year] = []
+    planets_tree_df[method][year].append(planet_details)
+
+print(planets_tree_df)
+```
+
+**Works fine**, but:
+
+* `iterrows()` is **slow** for large DataFrames.
+* Each `row` is a `pandas.Series`, not a normal dictionary — accessing fields repeatedly adds overhead.
+* You stay dependent on pandas until you’re done.
+
+---
+
+### 🪄 2. Building the Tree **After Converting to List of Dictionaries**
+
+```python
+planets_data = planets_df.to_dict(orient='records')
+planets_tree_dict = {}
+
+for planet in planets_data:  # each planet is a pure Python dict
+    method = planet['method']
+    year = planet['year']
+    planet_details = {
+        'orbital_period': planet['orbital_period'],
+        'mass': planet['mass'],
+        'distance': planet['distance']
+    }
+
+    if method not in planets_tree_dict:
+        planets_tree_dict[method] = {}
+    if year not in planets_tree_dict[method]:
+        planets_tree_dict[method][year] = []
+    planets_tree_dict[method][year].append(planet_details)
+
+print(planets_tree_dict)
+```
+
+**Advantages:**
+
+* Each iteration is pure Python — no pandas overhead.
+* Clean, consistent access to values via dictionary keys.
+* Easier to reuse with non-pandas data (e.g., from JSON or APIs).
+* More efficient for nested data manipulation.
+
+---
+
+### 🧠 Conceptual Difference
+
+| Aspect      | DataFrame Iteration            | List of Dictionaries                      |
+| ----------- | ------------------------------ | ----------------------------------------- |
+| Type        | pandas Series                  | Python dict                               |
+| Performance | Slower (`iterrows()` overhead) | Faster (native Python loop)               |
+| Readability | Slightly verbose               | Clean and intuitive                       |
+| Flexibility | Tied to pandas                 | Works anywhere in Python                  |
+| Best for    | Small, quick operations        | Building hierarchical / nested structures |
+
+---
+
+### Summary
+
+* When you’re building **hierarchical data structures** like trees or graphs, it’s better to convert your DataFrame to a **list of dictionaries** first. 
+* It turns your data into **Python-native objects** that can be nested, grouped, and accessed quickly.
+
+---
+
 
