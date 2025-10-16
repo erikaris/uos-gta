@@ -152,7 +152,7 @@ print(planets_tree_dict)
 
 ---
 
-### 🧠 Conceptual Difference
+### Conceptual Difference
 
 | Aspect      | DataFrame Iteration            | List of Dictionaries                      |
 | ----------- | ------------------------------ | ----------------------------------------- |
