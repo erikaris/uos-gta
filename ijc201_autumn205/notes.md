@@ -1,6 +1,6 @@
 # IJC201 - Week 3 Notes - 16th October 2025
 
-## df.to_dict()
+## I. df.to_dict()
 
 ```python
 df.to_dict(orient=...)
@@ -87,7 +87,7 @@ planets_df = pd.DataFrame({
 
 ---
 
-## Tree Building: Directly from dataframe vs converting to dictionary first. 
+## II. Tree Building: Directly from dataframe vs converting to dictionary first. 
 ### 1. Building the Tree **Directly from the DataFrame**
 
 ```python
@@ -171,4 +171,216 @@ print(planets_tree_dict)
 
 ---
 
+## III. Step-by-step Mini Visualization
+
+Let’s take a **tiny example dataset** — only three rows:
+
+| method          | year | orbital_period | mass | distance |
+| --------------- | ---- | -------------- | ---- | -------- |
+| Radial Velocity | 2006 | 269.3          | 7.1  | 77.4     |
+| Radial Velocity | 2006 | 874.8          | 2.3  | 56.2     |
+| Transit         | 2011 | 3.5            | 0.02 | 420.3    |
+
+---
+
+### Step 1 — Start empty
+
+```python
+planets_tree = {}
+```
+
+Tree right now:
+
+```
+{}
+```
+
+---
+
+### Step 2 — First planet
+
+**method = 'Radial Velocity'**, **year = 2006**
+
+```python
+if 'Radial Velocity' not in planets_tree:
+    planets_tree['Radial Velocity'] = {}
+```
+
+Tree becomes:
+
+```
+{
+  'Radial Velocity': {}
+}
+```
+
+Now add the year:
+
+```python
+if 2006 not in planets_tree['Radial Velocity']:
+    planets_tree['Radial Velocity'][2006] = []
+```
+
+Tree now:
+
+```
+{
+  'Radial Velocity': {
+      2006: []
+  }
+}
+```
+
+Then append the planet’s details:
+
+```python
+planets_tree['Radial Velocity'][2006].append({'orbital_period': 269.3, 'mass': 7.1, 'distance': 77.4})
+```
+
+Now the tree is:
+
+```
+{
+  'Radial Velocity': {
+      2006: [
+          {'orbital_period': 269.3, 'mass': 7.1, 'distance': 77.4}
+      ]
+  }
+}
+```
+
+---
+
+### Step 3 — Second planet (same method and year)
+
+**method = 'Radial Velocity'**, **year = 2006**
+
+Both keys already exist, so we just append:
+
+```python
+planets_tree['Radial Velocity'][2006].append({'orbital_period': 874.8, 'mass': 2.3, 'distance': 56.2})
+```
+
+Tree now:
+
+```
+{
+  'Radial Velocity': {
+      2006: [
+          {'orbital_period': 269.3, 'mass': 7.1, 'distance': 77.4},
+          {'orbital_period': 874.8, 'mass': 2.3, 'distance': 56.2}
+      ]
+  }
+}
+```
+
+---
+
+### Step 4 — Third planet
+
+**method = 'Transit'**, **year = 2011**
+
+`'Transit'` doesn’t exist yet → add it as `{}`
+`2011` doesn’t exist → add it as `[]`
+Then append planet details.
+
+Final tree:
+
+```
+{
+  'Radial Velocity': {
+      2006: [
+          {'orbital_period': 269.3, 'mass': 7.1, 'distance': 77.4},
+          {'orbital_period': 874.8, 'mass': 2.3, 'distance': 56.2}
+      ]
+  },
+  'Transit': {
+      2011: [
+          {'orbital_period': 3.5, 'mass': 0.02, 'distance': 420.3}
+      ]
+  }
+}
+```
+
+---
+
+### Why `[]` and not `{}` at the year level?
+
+Each year contains **multiple planets**.
+Each planet is represented as a small dictionary (with keys like `'mass'`, `'distance'`, etc.).
+
+Example:
+
+```python
+planets_tree['Radial Velocity'][2006] = [
+    {'orbital_period': 269.3, 'mass': 7.1, 'distance': 77.4},
+    {'orbital_period': 874.8, 'mass': 2.3, 'distance': 56.2}
+]
+```
+
+This means:
+
+* Each year → **a list** of planets.
+* Each planet → **a dictionary** describing it.
+
+---
+
+### Why not `{}` instead?
+
+If we did:
+
+```python
+planets_tree[method][year] = {}
+```
+
+then we’d need to assign **unique keys** for each planet, e.g.:
+
+```python
+planets_tree['Radial Velocity'][2006]['planet_1'] = {...}
+planets_tree['Radial Velocity'][2006]['planet_2'] = {...}
+```
+
+That’s **unnecessary complexity** because:
+
+* The planets don’t have natural unique keys (they’re just entries).
+* You only need to **store multiple items** in order — that’s exactly what a **list** does.
+
+So:
+* `list` = “there may be multiple items; order doesn’t matter much; no unique key”
+* `dict` = “each item must have a unique key”
+
+---
+
+### ⚖️ Quick comparison
+
+| Structure         | Example                      | Good for?                                                             |
+| ----------------- | ---------------------------- | --------------------------------------------------------------------- |
+| `{}` (dictionary) | `{ 'A': {...}, 'B': {...} }` | Key → Value mappings (e.g., method → years)                           |
+| `[]` (list)       | `[ {...}, {...}, {...} ]`    | Collections of similar items (e.g., all planets discovered in a year) |
+
+---
+
+### Visualization Summary
+
+```
+planets_tree
+│
+├── "Radial Velocity" (dict)
+│     └── 2006 (list)
+│           ├── Planet 1 (dict)
+│           └── Planet 2 (dict)
+│
+└── "Transit" (dict)
+      └── 2011 (list)
+            └── Planet 3 (dict)
+```
+
+---
+
+**In short:**
+
+* `{}` when we need **named keys** (like method or year).
+* `[]` when we need **a collection of items** (like many planets).
+
+---
 
