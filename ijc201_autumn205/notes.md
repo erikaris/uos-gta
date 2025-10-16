@@ -70,13 +70,7 @@ df.to_dict('index')
 
 ---
 
-Perfect 🌳 — let’s look at a **side-by-side example** showing the **two approaches** — one using the **DataFrame directly**, and one using the **list of dictionaries**.
-
-We’ll use a tiny mock dataset to keep it clear.
-
----
-
-### 🧩 Example Data
+### Example Data
 
 ```python
 import pandas as pd
