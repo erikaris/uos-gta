@@ -1,8 +1,4 @@
-Excellent — let’s break down all the `orient` options for `DataFrame.to_dict()` clearly and efficiently 👇
-
----
-
-### 📘 Syntax
+### Syntax
 
 ```python
 df.to_dict(orient=...)
@@ -21,7 +17,7 @@ df.to_dict(orient=...)
 
 ---
 
-### 🧩 Example in Action
+### Example in Action
 
 Say we have:
 
@@ -31,6 +27,13 @@ df = pd.DataFrame({
     'col1': [10, 20],
     'col2': [30, 40]
 })
+```
+
+```python
+|index|col1|col2|
+|---|---|---|
+|0|10|30|
+|1|20|40|
 ```
 
 Then:
@@ -57,12 +60,9 @@ df.to_dict('index')
 
 ---
 
-✅ **Quick summary:**
+**Quick summary:**
 
 * **Row-oriented:** `'records'`, `'index'`
 * **Column-oriented:** `'dict'`, `'list'`, `'series'`
 * **Full structure:** `'split'` (useful for saving/reconstructing DataFrames)
 
----
-
-Would you like me to show which `orient` works best for **JSON export** vs **database insertion**?
