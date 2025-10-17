@@ -1,0 +1,204 @@
+---
+title: "Week 4: Data cleaning and processing with R/RStudio"
+author: "Erika Siregar"
+format: live-html
+engine: knitr
+webr:
+  render-df: gt-interactive
+  resources:
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
+---
+
+{{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning objectives
+
+- To show you how to manipulate data using the dplyr package
+- To show you how we can join two datasets (or tables) using a common variable
+- To highlight potential issues when working with real datasets (e.g. outliers and missing values)
+
+## 1. Recap
+
+Last week we learned how to load data into R and do basic visualisation. This week
+we focus on data wrangling: transforming, filtering, selecting and summarising data
+using the tidyverse, especially dplyr. The common verbs are:
+
+- filter(): pick observations by their values
+- arrange(): reorder rows
+- select(): pick variables by name
+- mutate(): create new variables
+- summarise(): collapse values down to a single summary (often used with group_by())
+
+We will use the built-in `mpg` dataset for many examples.
+
+```{webr}
+#| warning: false
+library(tidyverse)
+str(mpg)
+```
+
+## 2. Data transformation with dplyr
+
+Selecting rows with `filter()` examples:
+
+```{webr}
+#| warning: false
+filter(mpg, manufacturer == "audi")
+filter(mpg, displ > 2)
+filter(mpg, displ >= 2)
+filter(mpg, displ > 2 & cyl > 6)
+```
+
+Try combining conditions with `|`, `&`, and `%in%`:
+
+```{webr}
+#| warning: false
+filter(mpg, (manufacturer %in% c("audi", "chevrolet")), year == 1999)
+```
+
+You can pipe results with `%>%` and use `count()` to aggregate:
+
+```{webr}
+#| warning: false
+filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999) %>%
+  count(manufacturer)
+```
+
+Sampling rows:
+
+```{webr}
+#| warning: false
+set.seed(1)
+sample_frac(mpg, 0.05)
+sample_n(mpg, 10)
+```
+
+Reordering rows with `arrange()`:
+
+```{webr}
+#| warning: false
+rio2016Medals <- read_csv("Rio2016.csv")
+arrange(rio2016Medals, Country)
+arrange(rio2016Medals, desc(Gold), desc(Silver), desc(Bronze))
+```
+
+Selecting columns with `select()` and combining with `filter()`:
+
+```{webr}
+#| warning: false
+mpg %>% select(manufacturer, hwy) %>% filter(manufacturer != "chevrolet" & hwy >= 20) %>%
+  arrange(desc(manufacturer))
+```
+
+Creating new variables with `mutate()`:
+
+```{webr}
+#| warning: false
+mutate(rio2016Medals, Total = Gold + Silver + Bronze)
+```
+
+Summarising with `summarise()` and `group_by()`:
+
+```{webr}
+#| warning: false
+summarise(mpg, avg = mean(hwy))
+group_by(mpg, year, manufacturer) %>% summarise(count = n())
+group_by(mpg, manufacturer) %>% summarise(count = n())
+```
+
+Exercise: how many unique models does each manufacturer produce? Create a new column
+called `HwyCtyRatio = hwy / cty`.
+
+```{webr}
+#| exercise: unique-models-hwyctyratio
+#| warning: false
+mpg %>% group_by(manufacturer) %>% summarise(unique_models = n_distinct(model))
+mpg %>% mutate(HwyCtyRatio = hwy / cty) %>% head()
+```
+
+## 3. Combining datasets (joins)
+
+dplyr provides joins similar to relational databases. Example using `nycflights13`:
+
+```{webr}
+#| warning: false
+install.packages("nycflights13")
+library(nycflights13)
+flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
+airlines
+flights2 %>% left_join(airlines, by = "carrier")
+```
+
+The `left_join()` keeps all rows from the left table and brings matching columns
+from the right table. See R for Data Science (relational data) for a full overview.
+
+## 4. Working with real data — Free School Meals (FSM)
+
+Real datasets often contain placeholders and missing values. The FSM dataset uses
+9999 as a protection placeholder (for values < 5) and contains NA for missing data.
+We must detect and handle these before computing summaries.
+
+```{webr}
+#| warning: false
+meals <- read_csv("freeschoolmeals.csv")
+summary(meals$FSMTaken)
+mean(meals$FSMTaken)
+mean(meals$FSMTaken, na.rm = TRUE)
+
+# Remove the 9999 placeholder
+actualFSMTaken <- meals$FSMTaken[meals$FSMTaken != 9999]
+length(actualFSMTaken)
+mean(actualFSMTaken, na.rm = TRUE)
+```
+
+Using `filter()` to keep NA rows as needed:
+
+```{webr}
+#| warning: false
+filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% count()
+```
+
+Replacing NA values in a vector with the mean (example):
+
+```{webr}
+#| warning: false
+y <- c(4, 5, 6, NA)
+is.na(y)
+y[is.na(y)] <- mean(y, na.rm = TRUE)
+y
+```
+
+Using `mutate()` to create a new column with NAs replaced by the column mean:
+
+```{webr}
+#| warning: false
+meals_clean <- meals %>%
+  filter(FSMTaken < 9999 | is.na(FSMTaken)) %>%
+  mutate(newFSMTaken = ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm = TRUE)), FSMTaken))
+meals_clean %>% head()
+```
+
+Exercise: create two scenario columns where 9999 is replaced by 4 (worst-case) and
+where 9999 is replaced by 0 (best-case). Compute the mean of FSMTaken for both cases.
+
+```{webr}
+#| exercise: fsm-scenarios
+#| warning: false
+meals %>% mutate(
+  FSM_worst = ifelse(FSMTaken == 9999, 4, FSMTaken),
+  FSM_best  = ifelse(FSMTaken == 9999, 0, FSMTaken)
+) %>% summarise(mean_worst = mean(FSM_worst, na.rm = TRUE), mean_best = mean(FSM_best, na.rm = TRUE))
+```
+
+## Further reading
+
+- R for Data Science (Chapters referenced in the session)
+- RStudio data wrangling cheatsheet: https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+- Datacamp import tutorial and other links cited in the handout
+
+## Images
+
+Note: no images were embedded from the original PDF during this conversion. If you
+want to include images from the PDF, place them in `week4_images/` and reference
+them here. Alternatively, images can be embedded as base64; contact me and I will
+extract and encode them.
