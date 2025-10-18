@@ -11,194 +11,508 @@ webr:
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
 
+
+The goal of this session is to start to learn about data wrangling – we saw last week how to gather data and today we will see how to transform it. This is key to being able to then analyse and explore the data and in practice the data wrangling part is probably about 80% of the effort when dealing with real life datasets.
+
+
 ## Learning objectives
 
 - To show you how to manipulate data using the dplyr package
-- To show you how we can join two datasets (or tables) using a common variable
-- To highlight potential issues when working with real datasets (e.g. outliers and missing values)
+- To show you how we can join two datasets (or tables) using a common variable 
+- To highlight potential issues when working with real datasets (e.g. outliers andmissing values)
 
 ## 1. Recap
 
-Last week we learned how to load data into R and do basic visualisation. This week
-we focus on data wrangling: transforming, filtering, selecting and summarising data
-using the tidyverse, especially dplyr. The common verbs are:
+Over the past three weeks we have learned some of the basics of R including how to run  functions, working with various types  of data structure (e.g. vectors and data frames)  and last week reading datasets and do some visualisation. This week we will focus on  working with data and in particular transforming data. We also looked at the concept of  packages in R which extend the base functionality. We will utilise another `tidyverse`  package especially designed for data wrangling called `dplyr`.  This all forms a part of the data exploration process.
 
-- filter(): pick observations by their values
-- arrange(): reorder rows
-- select(): pick variables by name
-- mutate(): create new variables
-- summarise(): collapse values down to a single summary (often used with group_by())
+## 2. Data transformation with `dplyr` packages
 
-We will use the built-in `mpg` dataset for many examples.
+Okay so we know how to load data into R and RStudio, but one of the most important aspects of ‘data wrangling’ is data transformation; that is filtering and selecting data; ordering data etc. We did some of this in Week 2 when we looked at data frames (the main data structure used in R when doing data science). However, if we remember this it was quite hard going and `tidyverse` provides the `dplyr` package that is a far easier set of tools for data transformation.  RStudio provides ‘cheat sheets’ for commonly used packages and this includes dplyr:
+
+[https://www.rstudio.com/wp-content%2Fuploads%2F2015%2F02%2Fdata-wrangling-cheatsheet.pdf](https://www.rstudio.com/wp-content%2Fuploads%2F2015%2F02%2Fdata-wrangling-cheatsheet.pdf)
+
+These are the main `dplyr` functions for working on data frames:
+
+- Pick observations by their values - `filter()`
+- Reorder the rows - `arrange()`
+- Pick variables by their names - `select()`
+- Create new variables with functions of existing variables - `mutate()`
+- Collapse many values down to a single summary - `summarise()`
+
+We will use the `mpg` dataset (you might remember it from practicals of INF4000) that comes in-built with `tidyverse`.  The dataset contains information about cars and consists of the following columns:
 
 ```{webr}
 #| warning: false
-library(tidyverse)
+#| autorun: true
+library(tidyverse) # you may not need to use this if already loaded
 str(mpg)
 ```
 
-## 2. Data transformation with dplyr
+To read more about this dataset: [https://rdrr.io/cran/gamair/man/mpg.html](https://rdrr.io/cran/gamair/man/mpg.html).
 
-Selecting rows with `filter()` examples:
+It is also worth highlighting at this stage a very useful dplyr function which is called 'piping' where we can pass the output of a function as the input to a next command using `%>%`. This saves a lot of time as you don’t need to keep storing results in variables. We’ll see the use of this in a moment.
+
+### Selecting rows/observations - `filter()`
+
+Suppose we want to select the rows (or observations) from the `mpg` dataset where the manufacturer is Audi. We can use the `filter()` function for this:
 
 ```{webr}
 #| warning: false
-filter(mpg, manufacturer == "audi")
+#| autorun: true
+filter(mpg, manufacturer=="audi") # note the == rather than = (a common mistake)
+```
+
+We could instead filter data where the engine displacement (`displ`) is greater than 2 
+(i.e. >2):
+
+```{webr}
+#| warning: false
+#| autorun: true
 filter(mpg, displ > 2)
+```
+
+Similarly we could select vehicles with engine displacement (`displ`) is greater than or 
+equal to 2 (>=2):
+
+```{webr}
+#| warning: false
+#| autorun: true
 filter(mpg, displ >= 2)
+```
+
+We can create more complex matching conditions using logical operators (see Week 2). For example, selecting the rows where the engine displacement is greater than 2 and (use `&`) the number of cylinders is greater than 6:
+
+```{webr}
+#| warning: false
+#| autorun: true
 filter(mpg, displ > 2 & cyl > 6)
 ```
 
-Try combining conditions with `|`, `&`, and `%in%`:
+You could select Audi cars built in 1999 using either of these function calls to `filter()`:
 
 ```{webr}
 #| warning: false
-filter(mpg, (manufacturer %in% c("audi", "chevrolet")), year == 1999)
+#| autorun: true
+filter(mpg, manufacturer=="audi", year==1999) # this does an AND between conditions
+filter(mpg, manufacturer=="audi" & year==1999) # this does an AND between conditions
 ```
 
-You can pipe results with `%>%` and use `count()` to aggregate:
+Note that in the first command we see the variables separated by ‘,’ and in the second we use ‘&’ - they both produce the same results.
 
-```{webr}
-#| warning: false
-filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999) %>%
-  count(manufacturer)
+### Exercise
+
+can you filter rows where the manufacturer is Audi OR the year of production (year) is 1999? Can you filter rows where the year of production (year) is 1999 and the manufacturer is NOT Audi?
+
+```{webr} 
+#| exercise: hist-y1-y2
+filter(mpg, ___)
 ```
 
-Sampling rows:
+Suppose we now want Audi or Chevrolet cars from 1999; we can create this using the following command:
 
 ```{webr}
 #| warning: false
-set.seed(1)
-sample_frac(mpg, 0.05)
-sample_n(mpg, 10)
+#| autorun: true
+filter(mpg, (manufacturer=="audi" | manufacturer=="chevrolet"), year==1999)
 ```
 
-Reordering rows with `arrange()`:
+If you look at the RStudio cheatsheet you can see the entire range of logic functions you can use (see “Logic in R” at the bottom of the sheet). One that is useful is the `%in%` logic comparison for group membership. We could have carried out the above also using `%in%` and a vector of names:
 
 ```{webr}
 #| warning: false
-rio2016Medals <- read_csv("Rio2016.csv")
+#| autorun: true
+filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999)
+```
+
+To show the use of the `dplyr` pipe command (`%>%`) we could pass the output of the previous `filter()` function as the input to the `count()` function where we want to count the manufacturer, i.e. how many Audi and Chevrolet cars  were released in 1999:
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999) %>% 
+    count(manufacturer)
+```
+
+On the RStudio cheatsheet you can find some other very helpful subset functions to filter out rows from a data frame (or tibble). This includes the common task of selecting a random sample of observations or rows. For this we can use the `sample_frac()` function (to sample a proportion of the rows) or `sample_n()` function (to sample a number of rows):
+
+```{webr}
+#| warning: false
+#| autorun: true
+sample_frac(mpg, 0.05, replace=TRUE) # sample 5% of the data
+```
+
+```{webr}
+#| warning: false
+#| autorun: true
+sample_n(mpg, 10, replace=TRUE) # sample of 10 rows
+```
+
+The `replace=TRUE` in the functions means that when a row is selected (taken out of the dataset), it is replaced by a copy. What this means, is that it is possible that the same row is chosen more than once. If you don’t want this, don’t write it, the default is not to replace. Notice that every time you run the function, it will provide different results. If you want to make results consistent, you can use the function `set.seed(X)`, where `X` is a number, before calling the sample function.
+
+### Reordering rows - `arrange()`
+
+We’ll make use of the 2016 Rio Olympic Games medals table to show how we re-order rows using the `arrange()` dplyr function:
+
+```{webr}
+#| warning: false
+#| autorun: true
+rio2016Medals<-read_csv("Rio2016.csv") # default separator is ','
 arrange(rio2016Medals, Country)
+```
+
+```{webr}
+#| warning: false
+#| autorun: true
+arrange(rio2016Medals, desc(Country)) # arrange in descending order
+```
+
+We can order by multiple columns simply adding more columns to the `arrange()` function as parameters. It can be hard to see this in action so we’ll order the data by number of gold, silver and bronze medals, but we will need to inspect the ties (i.e. where the values are the same) to be able to see the ordering by different columns. Let’s arrange the rows by number of gold medals won, followed by silver and then bronze (in descending order):
+
+```{webr}
+#| warning: false
+#| autorun: true
 arrange(rio2016Medals, desc(Gold), desc(Silver), desc(Bronze))
 ```
 
-Selecting columns with `select()` and combining with `filter()`:
+You can see the ordering with multiple columns where the preference is Gold but when we have the same number of gold medals (e.g. from row 9 and 10) then the data is sorted by number of Silver medals.
 
-```{webr}
-#| warning: false
-mpg %>% select(manufacturer, hwy) %>% filter(manufacturer != "chevrolet" & hwy >= 20) %>%
-  arrange(desc(manufacturer))
+### Exercise
+
+to better view the ordered tibble, pipe the results of the arrange function into the function View. Make sure that ties between countries with the same number of gold and silver medals are sorted based on the number of bronze medals.
+
+```{webr} 
+#| exercise: dplyr-arrange
+arrange(rio2016Medals, ___)
 ```
 
-Creating new variables with `mutate()`:
+### Selecting columns - `select()`
+
+Selecting columns with dplyr is very simple using the `select()` function. To select from the `mpg` dataset the manufacturer and highway fuel efficiency (`hwy`) columns we use:
 
 ```{webr}
 #| warning: false
-mutate(rio2016Medals, Total = Gold + Silver + Bronze)
+#| autorun: true
+select(mpg, manufacturer, hwy)
 ```
 
-Summarising with `summarise()` and `group_by()`:
+It you look at the RStudio cheatsheet you will see (bottom right) a series of ‘helper’ functions. These can be used with the `subset()` function and used for selecting columns. For example, we could select all the columns that begin with ‘d’:
 
 ```{webr}
 #| warning: false
-summarise(mpg, avg = mean(hwy))
-group_by(mpg, year, manufacturer) %>% summarise(count = n())
-group_by(mpg, manufacturer) %>% summarise(count = n())
+#| autorun: true
+select(mpg, starts_with("d"))
 ```
 
-Exercise: how many unique models does each manufacturer produce? Create a new column
-called `HwyCtyRatio = hwy / cty`.
+What’s useful is that using the pipe `%>%` command we can then use the commands `select()` and `filter()` together to filter out rows and columns
 
 ```{webr}
-#| exercise: unique-models-hwyctyratio
 #| warning: false
-mpg %>% group_by(manufacturer) %>% summarise(unique_models = n_distinct(model))
-mpg %>% mutate(HwyCtyRatio = hwy / cty) %>% head()
+#| autorun: true
+select(mpg, manufacturer, hwy) %>% 
+    filter(manufacturer=="chevrolet" & hwy >=20)
 ```
 
-## 3. Combining datasets (joins)
-
-dplyr provides joins similar to relational databases. Example using `nycflights13`:
+Note if we wanted to find all manufacturers other than Chevrolet where `hwy >= 20` we could use the logical NOT `!` operator:
 
 ```{webr}
 #| warning: false
+#| autorun: true
+select(mpg, manufacturer, hwy) %>% 
+    filter(manufacturer != "chevrolet" & hwy >= 20)
+```
+
+We could keep combining commands using the pipe `%>%` command to also arrange the data, e.g. in descending order of manufacturer:
+
+```{webr}
+#| warning: false
+#| autorun: true
+select(mpg, manufacturer, hwy) %>% 
+    filter(manufacturer != "chevrolet" & hwy >= 20) %>%
+    arrange(desc(manufacturer))
+```
+
+Finally, note how each the functions we have seen can work without specifying the data if they are part of a pipe chain. That means you can also start with your data and then chain all the functions. For example, the command below works the same as the previous one:
+
+```{webr}
+#| warning: false
+#| autorun: true
+mpg %>% 
+    select(manufacturer, hwy) %>% 
+    filter(manufacturer != "chevrolet" & hwy >=20) %>%
+    arrange(desc(manufacturer))
+```
+
+### Creating new variables - `mutate()`
+
+The `mutate()` function allows making new variables that are typically based on existing variables. For example, in the Rio 2016 medals data we could create a new column/variable for the total of medals won using the `mutate()` function:
+
+```{webr}
+#| warning: false
+#| autorun: true
+mutate(rio2016Medals, Total=Gold+Silver+Bronze) # similar to rowSums
+```
+
+Note that the mutate function doesn’t change the original data, which means the new column is only available to functions that are piped after the mutate. If you want to save the new column, you will need to save the result of mutate to a variable. Also note that if you create a column with the same name as an already existing one, it will overwrite the existing one.
+
+### Collapse many values down to a single summary - `summarise()`
+
+The `summarise()` function allows us to summarise data into a single row of values. For example, we could compute the average of highway efficiency (`hwy`) of the `mpg` dataset using the following `summarise()` command:
+
+```{webr}
+#| warning: false
+#| autorun: true
+summarise(mpg, avg=mean(hwy))
+```
+
+Notice that like mutate, summarise creates a new column. Often the `summarise()` function is paired with the `group_by()` function. So let’s suppose we want to group the `mpg` data by `manufacturer` and `year` then we can do this with the following `group_by()` function:
+
+```{webr}
+#| warning: false
+#| autorun: true
+group_by(mpg, year, manufacturer) %>% summarise(count=n())
+```
+
+We could use the `group_by()` and `summarise()` functions together (with a pipe) to count the number of rows we have for each manufacturer using the `n()` function (which stands for number):
+
+```{webr}
+#| warning: false
+#| autorun: true
+group_by(mpg, manufacturer) %>% summarise(count=n())
+```
+
+### Exercise
+
+Look at the second page of cheatsheet for useful functions to use with mutate and summarise. How many unique models do each manufacturer produce? Create a new column with a ratio of highway efficiency (hwy) vs city efficiency (cty) called HwyCtyRatio.
+
+```{webr} 
+#| exercise: dplyr-summarise
+mpg %>% ___
+```
+
+## 3. Combining datasets
+
+There are many ways of combining datasets, which is a common task in data science and you may have to do that in your coursework. Multiple functions are available for this and we will come back to this later in the course but dplyr makes use of the notion of joins from relational databases to combine datasets.
+
+There is an excellent overview of this in Chapter 10 of R for Data Science (which is Chapter 13 in the online version: [http://r4ds.had.co.nz/relational-data.html](http://r4ds.had.co.nz/relational-data.html)). We will come back to joining datasets later in the course because we need to spend more time on this, but for now let’s get a quick flavour of what we can do in R with dplyr.
+
+Note: don’t worry if you don’t understand all of this yet as you will also learn about relational data next semester in the Database Design module.
+
+To demonstrate joining datasets let’s make use of a package called `nycflights13` which contains various tables of data which are what we call relational - the tables are related to each other in some way (via keys):
+
+```{webr}
+#| warning: false
+#| autorun: true
 install.packages("nycflights13")
+
+library(tidyverse)
 library(nycflights13)
+
+nycflights13::airlines
+```
+
+Note that the use of :: is the R way of identifying functions (or datasets) within a package. We can also view other datasets:
+
+```{webr}
+#| warning: false
+#| autorun: true
+nycflights13::airports
+```
+
+The airlines data frame is a table of airline numbers and names; the flights data frame contains flight details. To make things easier let’s drop unimportant variables so it's easier to understand the join results - we can use a `select()` function for this:
+
+```{webr}
+#| warning: false
+#| autorun: true
 flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
+flights2
+```
+
+Suppose we want to have the full name of the airline in the `flights2` table rather than the carrier abbreviation. We have the abbreviation and the full name in the airlines table and therefore we can combine tables using a `join` command.
+
+```{webr}
+#| warning: false
+#| autorun: true
 airlines
-flights2 %>% left_join(airlines, by = "carrier")
 ```
 
-The `left_join()` keeps all rows from the left table and brings matching columns
-from the right table. See R for Data Science (relational data) for a full overview.
-
-## 4. Working with real data — Free School Meals (FSM)
-
-Real datasets often contain placeholders and missing values. The FSM dataset uses
-9999 as a protection placeholder (for values < 5) and contains NA for missing data.
-We must detect and handle these before computing summaries.
+In the airlines table you have the full name of the airline carrier listed once - abbreviation and number (e.g. AA is American Airlines Inc.). What we want to do is to go through each of the rows in the `flights2` table and match the carrier abbreviation with the carrier in the airlines table replacing the abbreviation with the name as we go.
 
 ```{webr}
 #| warning: false
-meals <- read_csv("freeschoolmeals.csv")
+#| autorun: true
+flights2 %>% 
+    left_join(airlines, by="carrier")
+```
+
+The `left_join()` function is an example of a mutating join: “A mutating join allows you  to combine variables from two tables. It first matches observations by their keys, then copies across variables from one table to the other” (Wickham & Grolemund, 2017: 181). The idea of a join between tables is that you combine data using a key variable - in this case by the carrier abbreviation. That key variable needs to be present in both tables, ideally using the same column name. There are different types of join including inner and outer joins. We have used an outer join which means that any rows appearing in at least one of the tables being joined is kept. Figure 1 shows three types of outer join: left, right and full with the keys for joining being 1, 2, 3, etc.   In outer joins, at least one of the tables (or both in full outer join) keep all of its records. When a row contains a value for the key variable that is not present in the other table, the new column is filled with missing values. Inner joins only match records that are present in both tables and is the most frequent joined you will use in the Database Design module.
+
+<figure>
+  <img src="https://r4ds.had.co.nz/diagrams/join-outer.png" alt="Outer join diagram" width="400">
+  <figcaption>Figure 1: Illustration of outer joins (left, right and full). Source: R for Data Science (Wickham & Grolemund, 2017: 182) and [http://r4ds.had.co.nz/relational-data.html](http://r4ds.had.co.nz/relational-data.html)</figcaption>
+</figure>
+
+
+In our case we used a left join which means we keep all the observations in the flights2 table (i.e. we don’t ‘lose’ any of the flights) and where carrier matches in the airlines table the carrier name is copied across as a new variable (or column) in the `flights2` table.
+
+Again, we will come back to combining datasets in a later session so don’t worry too much about this for now, but do be impressed by what you can do with dplyr because it’s very powerful.
+
+## 4. Working with real data
+
+Finally, let’s just return to the Free School Meals (FSMs) dataset that we worked on the previous week (you can find the file on the week 3 practical folder). Much of the data we have worked with so far is what we might call clean - it’s fairly complete and in a useable format. But the FSM dataset is more realistic of what we might find in practice. There are at least a couple of ‘features’ to point out with this dataset. Start by viewing the dataset:
+
+```{webr}
+#| warning: false
+#| autorun: true
+View(meals)
+```
+
+If you scroll through the data a couple of things might stand out to you: 
+
+- There seems to be a repeated high value (9999) in the FSMTaken column
+- There is a value of NA also in the FSMTaken column
+
+Viewing the data.go.uk page about the dataset ([https://data.gov.uk/dataset/free-school-meals](https://data.gov.uk/dataset/free-school-meals)) we see an explanation for this:
+
+> Please note that, due to data protection requirements, we can't publish real values  
+for FSMTotal or FSMTaken when those figures are < 5. Thus, those values have 
+been converted to 9999.
+> If a cell has no value it means that data is not collected for that field for that 
+specific school.
+
+It’s important to know your data and in this case identifying that 9999 is a ‘fake’ value is important, especially if we compute functions (e.g. averages) across the values; if we treat 9999 as an actual value we will get inaccurate results. The other issue is with the NA (Not Available) values - these represent missing data and this is something that comes up a lot in practice. To see the effects of these let’s assume we want to compute the mean number of FSMs taken across all schools in our dataset. Start with getting a summary of the values using the `summary()` function:
+
+```{webr}
+#| warning: false
+#| autorun: true
 summary(meals$FSMTaken)
+```
+
+We see that the mean is very different from the median and the maximum value of FSMTaken is 9999. The big difference in the mean and median signals a potential problem and the mean value is being affected by outliers (i.e. the 9999 value). The `summary()` function also tells us we have 17 missing values (NA).
+
+We can also experience problems if we try to use the mean() function on the FSMTaken column:
+
+```{webr}
+#| warning: false
+#| autorun: true
 mean(meals$FSMTaken)
-mean(meals$FSMTaken, na.rm = TRUE)
-
-# Remove the 9999 placeholder
-actualFSMTaken <- meals$FSMTaken[meals$FSMTaken != 9999]
-length(actualFSMTaken)
-mean(actualFSMTaken, na.rm = TRUE)
 ```
 
-Using `filter()` to keep NA rows as needed:
+The problem here is that we have missing values and the mean() function by default doesn’t like this. We can ignore the missing values using the `na.rm=TRUE` parameter in the `mean()` function (i.e. this says remove any `NA` values when computing the mean):
 
 ```{webr}
 #| warning: false
-filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% count()
+#| autorun: true
+mean(meals$FSMTaken, na.rm=TRUE)
 ```
 
-Replacing NA values in a vector with the mean (example):
+But again the mean seems very high and we know that this is not a true value because of the 9999 value. Therefore we should ignore these rows when computing the mean. You might need to go back to Week 1 where we looked at vectors , but we can filter out values using this command:
 
 ```{webr}
 #| warning: false
-y <- c(4, 5, 6, NA)
+#| autorun: true
+actualFSMTaken<-meals$FSMTaken[meals$FSMTaken!=9999]
+length(actualFSMTaken) # it’s a vector so we can use length to count the number of values
+```
+
+The original FSMTaken column contained 250 values; we’ve removed the 9999 values and now we can compute the mean:
+
+```{webr}
+#| warning: false
+#| autorun: true
+mean(actualFSMTaken, na.rm=TRUE)
+```
+
+This is an accurate mean value and you can confirm this because it is far closer to the median value. 
+
+In R there is always more than one way to do something. Now you might have said why not use the dplyr function `select()` to filter out rows where FSMTaken is 9999. We could do this using:
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(meals, FSMTaken<9999)
+```
+
+If we then count the number of rows in the filtered dataset we see we have 189 rows:
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(meals, FSMTaken<9999) %>% count()
+```
+
+Why doesn’t this match the 206 value when we counted the number of values in actualFSMTaken? It’s because the `filter()` command has also removed the data with the NA values (206-17=189). We could keep the NA values using `filter()` in this way:
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(meals, (FSMTaken<9999 | is.na(FSMTaken))) %>% count()
+```
+
+The above says filter and return values of FSMTaken that are less than 9999 OR where the value is NA - this is achieved using the `is.na()` function which returns TRUE if the value is NA.
+
+The final question for the moment is what do we do with missing values? One approach is to simply ignore rows (or columns) where we have missing values.  But this means we could be throwing away a lot of our data. There are various ways of handling missing data, including replacing NA with a mean value, learning a model/function to estimate a value, insert a random value, etc. For more information see:
+
+- https://thomasleeper.com/Rcourse/Tutorials/NAhandling.html
+- http://www.dummies.com/programming/r/how-to-deal-with-missing-data-values-in-r/
+
+One approach could be to replace the NA value with a mean value. As a simple example suppose we create a vector of 4 elements with the last value being NA:
+
+```{webr}
+#| warning: false
+#| autorun: true
+y <- c(4,5,6,NA)
 is.na(y)
-y[is.na(y)] <- mean(y, na.rm = TRUE)
+y[is.na(y)] <- mean(y,na.rm=TRUE)
 y
 ```
 
-Using `mutate()` to create a new column with NAs replaced by the column mean:
+Remember in R that many functions are vectorised - this means that they are executed on each element of a vector. So in the above R will go through each element and test if the value is NA and if it is then replace this element with the mean value of y. So the mean of 4, 5 and 6 if 5 which is used to replace the element with the NA value (element 4). Let’s do this on our actualFSMTaken vector:
 
 ```{webr}
 #| warning: false
-meals_clean <- meals %>%
-  filter(FSMTaken < 9999 | is.na(FSMTaken)) %>%
-  mutate(newFSMTaken = ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm = TRUE)), FSMTaken))
-meals_clean %>% head()
+#| autorun: true
+actualFSMTaken[is.na(actualFSMTaken)]<-floor(mean(actualFSMTaken, na.rm=TRUE))
 ```
 
-Exercise: create two scenario columns where 9999 is replaced by 4 (worst-case) and
-where 9999 is replaced by 0 (best-case). Compute the mean of FSMTaken for both cases.
+You can check this works for yourself (e.g. check the 4th value from the last element in the vector). The floor function is useful to transform the mean value from a double (29.90476) to an integer (29) so there is no mismatch with the over values.
+
+This is okay but what if we want to work with the original data frame and keep all the values (rather than extract out a vector of just the FSMTaken column)? We can use the dplyr mutate() function to create a new variable called newFSMTaken in our existing data frame. For now let me show you how to do this as it may appear confusing at first:
 
 ```{webr}
-#| exercise: fsm-scenarios
 #| warning: false
-meals %>% mutate(
-  FSM_worst = ifelse(FSMTaken == 9999, 4, FSMTaken),
-  FSM_best  = ifelse(FSMTaken == 9999, 0, FSMTaken)
-) %>% summarise(mean_worst = mean(FSM_worst, na.rm = TRUE), mean_best = mean(FSM_best, na.rm = TRUE))
+#| autorun: true
+filter(meals, (FSMTaken<9999 | is.na(FSMTaken))) %>% 
+    mutate(newFSMTaken=ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm=TRUE)), FSMTaken))
 ```
 
-## Further reading
+I have omitted some rows above but if you check row 40 you can see that the NA has now been replaced with the mean value 29. 
 
-- R for Data Science (Chapters referenced in the session)
-- RStudio data wrangling cheatsheet: https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
-- Datacamp import tutorial and other links cited in the handout
+You haven’t seen the ifelse() statement1 before. This is called a condition and is very helpful as it controls when we do things. This basically says if condition==TRUE (the value of FSMTaken is NA) then assign value A (the mean of FSMTaken as an integer); else assign value B (the value that is already present because it is not NA). In our example: if the FSMTaken value is NA then we compute the mean of FSMTaken and use this value; otherwise we use the original FSMTaken value. Using mutate() we assign this to a new variable called newFSMTaken.
 
-## Images
+### Exercise
 
-Note: no images were embedded from the original PDF during this conversion. If you
-want to include images from the PDF, place them in `week4_images/` and reference
-them here. Alternatively, images can be embedded as base64; contact me and I will
-extract and encode them.
+Lets imagine someone asks you to obtain the mean of FSMTaken in the worst case scenario, where all the 9999 values (when the value is less than 5) are considered to be 4. Use the functions you have learned today to change those 9999 values to 4 (probably best to create a new column for this) and calculate the mean. Do the same thing, for the case scenario where FSMTaken for those 9999 values is considered to be 0.
+
+```{webr} 
+#| exercise: dplyr-real-data
+meals %>% ___
+```
+
+## Further resources
+
+Specifically for this session:
+
+- R for Data Science - from the book (Chapters 3, 8 and 10)
+- R for Data Science - from the website (Chapters 5, 11 and 13)
+- Learning R book (Chapters 12 and 13)
+- The RStudio cheatsheet for data wrangling: [https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) 
+- Datacamp tutorial on importing data: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial) 
+- See the links throughout this handout
+
+For more information about working with Excel files see: [https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r](https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r)
+There are packages and functions for reading data into R for most formats, see e.g.: [http://www.statmethods.net/input/importingdata.html](http://www.statmethods.net/input/importingdata.html) and [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial) 
+
+More generally:
+
+- Swirl interactive tutorial on R: [https://github.com/swirldev/swirl_courses](https://github.com/swirldev/swirl_courses) 
+- R for Data Science: [http://r4ds.had.co.nz/](http://r4ds.had.co.nz/)

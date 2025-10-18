@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-author: "Claus O. Wilke"
+author: "Erika Siregar"
 date: last-modified
 format: 
   revealjs:
