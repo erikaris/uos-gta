@@ -1,0 +1,284 @@
+---
+title: "Week 4: Data cleaning and processing with R/RStudio"
+author: "Erika Siregar"
+format:
+  live-revealjs:
+    theme: solarized
+    transition: slide
+    slide-number: true
+    incremental: false
+    scrollable: true
+engine: knitr
+resources:
+  - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
+  - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/freeschoolmeals.csv
+execute:
+  echo: true
+  warning: false
+webr:
+  render-df: gt-interactive
+  resources:
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
+    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/freeschoolmeals.csv
+---
+
+{{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning objectives
+
+- Manipulate data with the dplyr package
+- Join two datasets (tables) using a common key
+- Spot issues in real datasets (outliers, missing values) and handle them
+
+---
+
+## Recap
+
+Over the past three weeks we've looked at R basics, data structures, importing and basic visualisation. This week focuses on data transformation using the tidyverse, mainly dplyr.
+
+---
+
+## Data transformation with dplyr
+
+dplyr gives concise verbs for common tasks:
+
+- filter() — pick rows
+- arrange() — reorder rows
+- select() — pick columns
+- mutate() — create/transform columns
+- summarise() — collapse to summaries
+
+We'll use the built-in mpg dataset for examples.
+
+---
+
+### Inspect mpg
+
+```{webr}
+#| warning: false
+#| autorun: true
+library(tidyverse)
+str(mpg)
+```
+
+---
+
+### filter() — pick observations
+
+Select Audi cars? Engine displacement > 2?
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(mpg, manufacturer=="audi")
+filter(mpg, displ > 2)
+```
+
+---
+
+### filter() - multiple conditions
+
+Combine conditions with `&` and `|`, or use `%in%` for membership.
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(mpg, displ > 2 & cyl > 6)
+filter(mpg, manufacturer=="audi", year==1999)
+filter(mpg, manufacturer=="audi" & year==1999)
+```
+
+---
+
+<!-- ### Sampling and pipes
+
+Use `sample_frac` or `sample_n` to take random samples. Use `%>%` to chain operations.
+
+```{webr}
+#| warning: false
+#| autorun: true
+sample_frac(mpg, 0.05, replace=TRUE)
+sample_n(mpg, 10, replace=TRUE)
+```
+
+--- -->
+
+### arrange() — reordering rows
+
+```{webr}
+#| warning: false
+#| autorun: true
+rio2016Medals <- read_csv("Rio2016.csv")
+arrange(rio2016Medals, Country)
+```
+
+---
+
+### arrange() — Descending and multi-column ordering:
+
+```{webr}
+#| warning: false
+#| autorun: true
+arrange(rio2016Medals, desc(Country))
+arrange(rio2016Medals, desc(Gold), desc(Silver), desc(Bronze))
+```
+
+---
+
+### select() — selecting columns
+
+```{webr}
+#| warning: false
+#| autorun: true
+select(mpg, manufacturer, hwy)
+select(mpg, starts_with("d"))
+```
+
+---
+
+### Combine select + filter + arrange with pipes:
+
+```{webr}
+#| warning: false
+#| autorun: true
+mpg %>% 
+  select(manufacturer, hwy) %>% 
+  filter(manufacturer != "chevrolet" & hwy >=20) %>%
+  arrange(desc(manufacturer))
+```
+
+---
+
+### mutate() — new variables
+
+Create a Total column in the medals data?
+Mutate only affects later steps in the pipe unless you assign it to a variable.
+
+```{webr}
+#| warning: false
+#| autorun: true
+mutate(rio2016Medals, Total = Gold + Silver + Bronze)
+```
+
+---
+
+### summarise() and group_by()
+
+```{webr}
+#| warning: false
+#| autorun: true
+summarise(mpg, avg = mean(hwy))
+group_by(mpg, year, manufacturer) %>% summarise(count = n())
+group_by(mpg, manufacturer) %>% summarise(count = n())
+```
+
+---
+
+## Combining datasets (joins)
+
+Use the nycflights13 package to demonstrate joins between relational tables.
+
+```{webr}
+#| warning: false
+#| autorun: true
+library(tidyverse)
+library(nycflights13)
+
+nycflights13::airlines
+nycflights13::airports
+```
+
+---
+
+### Combining datasets (left join)
+
+Add full airline name to flights:
+
+```{webr}
+#| warning: false
+#| autorun: true
+flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
+flights2 %>% left_join(airlines, by = "carrier")
+```
+
+---
+
+## Working with real data — Free School Meals (FSM)
+
+```{webr}
+#| warning: false
+#| autorun: true
+meals <- read_csv("freeschoolmeals.csv")
+head(meals)
+```
+
+---
+
+### FSM - Common issues
+
+- sentinel outlier value: 9999 (represents suppressed values < 5)
+- NA values for missing data
+
+Check summary and mean behaviour:
+
+```{webr}
+#| warning: false
+#| autorun: true
+summary(meals$FSMTaken)
+mean(meals$FSMTaken)
+mean(meals$FSMTaken, na.rm=TRUE)
+```
+
+---
+
+### FSM - Filter out 9999 and handle NA
+
+```{webr}
+#| warning: false
+#| autorun: true
+actualFSMTaken <- meals$FSMTaken[meals$FSMTaken != 9999]
+length(actualFSMTaken)
+mean(actualFSMTaken, na.rm = TRUE)
+```
+
+Or use dplyr to keep NA and exclude 9999:
+
+```{webr}
+#| warning: false
+#| autorun: true
+filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% count()
+filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% 
+  mutate(newFSMTaken = ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm = TRUE)), FSMTaken))
+```
+
+---
+
+### Missing values — simple imputation example
+
+```{webr}
+#| warning: false
+#| autorun: true
+y <- c(4,5,6,NA)
+is.na(y)
+y[is.na(y)] <- mean(y, na.rm = TRUE)
+y
+```
+
+---
+
+## Further resources
+
+- R for Data Science (Chapters 3, 8, 10)
+- RStudio data-wrangling cheatsheet
+- Datacamp tutorials and the links embedded in the worksheet
+
+---
+
+## Important points (highlight)
+
+- Always inspect your data: summary(), str(), View()
+- Watch out for sentinel values (e.g. 9999) and decide how to treat them before computing summaries
+- Missing values (NA) must be handled explicitly (na.rm or imputation)
+- dplyr verbs (filter, select, arrange, mutate, summarise) + pipes make transformation readable and reproducible
+- Use joins carefully: pick the right join (left/inner/full) and check for unexpected NAs after the join
+- When sampling or random processes, set a seed to make results reproducible
