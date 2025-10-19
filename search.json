@@ -154,6 +154,97 @@
     ]
   },
   {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#learning-objectives",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#learning-objectives",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Learning objectives",
+    "text": "Learning objectives\n\nManipulate data with the dplyr package\nJoin two datasets (tables) using a common key\nSpot issues in real datasets (outliers, missing values) and handle them",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#recap",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#recap",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Recap",
+    "text": "Recap\nOver the past three weeks we’ve looked at R basics, data structures, importing and basic visualisation. This week focuses on data transformation using the tidyverse, mainly dplyr.",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#data-transformation-with-dplyr",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#data-transformation-with-dplyr",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Data transformation with dplyr",
+    "text": "Data transformation with dplyr\ndplyr gives concise verbs for common tasks:\n\nfilter() — pick rows\narrange() — reorder rows\nselect() — pick columns\nmutate() — create/transform columns\nsummarise() — collapse to summaries\n\nWe’ll use the built-in mpg dataset for examples.",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-joins",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-joins",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Combining datasets (joins)",
+    "text": "Combining datasets (joins)\nUse the nycflights13 package to demonstrate joins between relational tables.",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Working with real data — Free School Meals (FSM)",
+    "text": "Working with real data — Free School Meals (FSM)",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#further-resources",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#further-resources",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Further resources",
+    "text": "Further resources\n\nR for Data Science (Chapters 3, 8, 10)\nRStudio data-wrangling cheatsheet\nDatacamp tutorials and the links embedded in the worksheet",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#important-points-highlight",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#important-points-highlight",
+    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "section": "Important points (highlight)",
+    "text": "Important points (highlight)\n\nAlways inspect your data: summary(), str(), View()\nWatch out for sentinel values (e.g. 9999) and decide how to treat them before computing summaries\nMissing values (NA) must be handled explicitly (na.rm or imputation)\ndplyr verbs (filter, select, arrange, mutate, summarise) + pipes make transformation readable and reproducible\nUse joins carefully: pick the right join (left/inner/full) and check for unexpected NAs after the join\nWhen sampling or random processes, set a seed to make results reproducible",
+    "crumbs": [
+      "Slides",
+      "Week 4: Data cleaning and processing with R/RStudio"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "UoS GTA Semester I",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-1.html#why-data-visualization",
     "href": "intro-to-data-science/autumn-2025/slides/week-1.html#why-data-visualization",
     "title": "Introduction",
@@ -372,20 +463,6 @@
       "Slides",
       "Introduction"
     ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "UoS GTA Semester I",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   },
   {
     "objectID": "intro-to-data-science/autumn-2025/syllabus.html",
