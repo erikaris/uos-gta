@@ -11,6 +11,10 @@ webr:
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
 
+```{=html}
+<iframe class="slide-deck" src="../slides/week-4.html" height="420" width="747" style="border: 1px solid #2e3846;"></iframe>
+```
+
 
 The goal of this session is to start to learn about data wrangling – we saw last week how to gather data and today we will see how to transform it. This is key to being able to then analyse and explore the data and in practice the data wrangling part is probably about 80% of the effort when dealing with real life datasets.
 

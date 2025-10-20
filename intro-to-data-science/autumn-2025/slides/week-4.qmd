@@ -1,44 +1,49 @@
 ---
-title: "Week 4: Data cleaning and processing with R/RStudio"
+title: "Week 4 - Data cleaning and processing"
 author: "Erika Siregar"
 format:
   live-revealjs:
-    theme: solarized
+    theme: slides.scss
+    title-slide-attributes:
+      data-background-color: "#9cbbbd"
     transition: slide
     slide-number: true
-    incremental: false
-    scrollable: true
-engine: knitr
+    countdown:
+      color_background: "#283c4d"
+      color_text: "#ffffff"
 resources:
-  - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
-  - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/freeschoolmeals.csv
+  - ../data
 execute:
   echo: true
   warning: false
 webr:
   render-df: gt-interactive
-  resources:
-    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
-    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/freeschoolmeals.csv
 ---
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
 
-## Learning objectives
-
-- Manipulate data with the dplyr package
-- Join two datasets (tables) using a common key
-- Spot issues in real datasets (outliers, missing values) and handle them
-
----
-
-## Recap
+# Learning objectives {.smaller}
 
 Over the past three weeks we've looked at R basics, data structures, importing and basic visualisation. This week focuses on data transformation using the tidyverse, mainly dplyr.
 
----
+::: {.columns}
+::: {.column width="70%"}
+1. Manipulate data with the dplyr package
 
-## Data transformation with dplyr
+2. Join two datasets (tables) using a common key
+
+3. Spot issues in real datasets (outliers, missing values) and handle them
+
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="25%"}
+{{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/slides/week-4.html width=300 height=300 >}}
+:::
+::: 
+
+
+# Data transformation with dplyr {.smaller}
 
 dplyr gives concise verbs for common tasks:
 
@@ -48,11 +53,10 @@ dplyr gives concise verbs for common tasks:
 - mutate() — create/transform columns
 - summarise() — collapse to summaries
 
+
+## Inspect mpg {.smaller}
+
 We'll use the built-in mpg dataset for examples.
-
----
-
-### Inspect mpg
 
 ```{webr}
 #| warning: false
@@ -61,9 +65,8 @@ library(tidyverse)
 str(mpg)
 ```
 
----
 
-### filter() — pick observations
+## filter() - Pick observations {.smaller}
 
 Select Audi cars? Engine displacement > 2?
 
@@ -74,9 +77,8 @@ filter(mpg, manufacturer=="audi")
 filter(mpg, displ > 2)
 ```
 
----
 
-### filter() - multiple conditions
+## filter() - Multiple conditions {.smaller}
 
 Combine conditions with `&` and `|`, or use `%in%` for membership.
 
@@ -88,33 +90,33 @@ filter(mpg, manufacturer=="audi", year==1999)
 filter(mpg, manufacturer=="audi" & year==1999)
 ```
 
----
+## Your turn: Filter multiple condition {.smaller}
 
-<!-- ### Sampling and pipes
+::: your-turn
+Can you filter rows where the manufacturer is Audi OR the year of production (year) is 1999? Can you filter rows where the year of production (year) is 1999 and the manufacturer is NOT Audi?
+:::
 
-Use `sample_frac` or `sample_n` to take random samples. Use `%>%` to chain operations.
-
-```{webr}
-#| warning: false
-#| autorun: true
-sample_frac(mpg, 0.05, replace=TRUE)
-sample_n(mpg, 10, replace=TRUE)
+::: exercise-folder
+```{webr} 
+#| exercise: hist-y1-y2
+filter(mpg, ___)
 ```
+:::
 
---- -->
+{{< countdown 10:00 >}}
 
-### arrange() — reordering rows
+
+## arrange() — Reordering rows {.smaller}
 
 ```{webr}
 #| warning: false
 #| autorun: true
-rio2016Medals <- read_csv("Rio2016.csv")
+rio2016Medals <- read_csv("data/Rio2016.csv")
 arrange(rio2016Medals, Country)
 ```
 
----
 
-### arrange() — Descending and multi-column ordering:
+## arrange() — Descending and multi-column ordering {.smaller}
 
 ```{webr}
 #| warning: false
@@ -123,20 +125,42 @@ arrange(rio2016Medals, desc(Country))
 arrange(rio2016Medals, desc(Gold), desc(Silver), desc(Bronze))
 ```
 
----
 
-### select() — selecting columns
+## Your turn: Result piping {.smaller}
+
+::: your-turn
+to better view the ordered tibble, pipe the results of the arrange function into the function View. Make sure that ties between countries with the same number of gold and silver medals are sorted based on the number of bronze medals.
+:::
+
+::: exercise-folder
+```{webr} 
+#| exercise: dplyr-pipe-medals
+rio2016Medals
+```
+:::
+
+{{< countdown 10:00 >}}
+
+
+## select() — Selecting columns {.smaller}
 
 ```{webr}
 #| warning: false
 #| autorun: true
 select(mpg, manufacturer, hwy)
+```
+
+
+## select() — Selecting with pattern {.smaller}
+
+```{webr}
+#| warning: false
+#| autorun: true
 select(mpg, starts_with("d"))
 ```
 
----
 
-### Combine select + filter + arrange with pipes:
+## Combine select + filter + arrange with pipes {.smaller}
 
 ```{webr}
 #| warning: false
@@ -147,9 +171,8 @@ mpg %>%
   arrange(desc(manufacturer))
 ```
 
----
 
-### mutate() — new variables
+## mutate() — New variables {.smaller}
 
 Create a Total column in the medals data?
 Mutate only affects later steps in the pipe unless you assign it to a variable.
@@ -160,39 +183,61 @@ Mutate only affects later steps in the pipe unless you assign it to a variable.
 mutate(rio2016Medals, Total = Gold + Silver + Bronze)
 ```
 
----
 
-### summarise() and group_by()
+## summarise() {.smaller}
 
 ```{webr}
 #| warning: false
 #| autorun: true
 summarise(mpg, avg = mean(hwy))
-group_by(mpg, year, manufacturer) %>% summarise(count = n())
-group_by(mpg, manufacturer) %>% summarise(count = n())
 ```
 
----
 
-## Combining datasets (joins)
+## summarise() and group_by() {.smaller}
+
+```{webr}
+#| warning: false
+#| autorun: true
+group_by(mpg, year, manufacturer) %>% summarise(count = n())
+```
+
+
+## Your turn: Combine mutate and summarise {.smaller}
+
+::: your-turn
+Look at the second page of cheatsheet for useful functions to use with mutate and summarise. How many unique models do each manufacturer produce? Create a new column with a ratio of highway efficiency (hwy) vs city efficiency (cty) called HwyCtyRatio.
+:::
+
+::: exercise-folder
+```{webr} 
+#| exercise: dplyr-summarise-hwyctyration
+mpg
+```
+:::
+
+{{< countdown 10:00 >}}
+
+
+# Combining datasets
+
+
+## Explore datasets {.smaller}
 
 Use the nycflights13 package to demonstrate joins between relational tables.
 
 ```{webr}
 #| warning: false
 #| autorun: true
-library(tidyverse)
 library(nycflights13)
 
 nycflights13::airlines
 nycflights13::airports
 ```
 
----
 
-### Combining datasets (left join)
+## Combining datasets (left join) {.smaller}
 
-Add full airline name to flights:
+Add full airline name to flights
 
 ```{webr}
 #| warning: false
@@ -201,20 +246,18 @@ flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
 flights2 %>% left_join(airlines, by = "carrier")
 ```
 
----
+# Spot issues in real datasets
 
-## Working with real data — Free School Meals (FSM)
+## Working with real data — Free School Meals (FSM) {.smaller}
 
 ```{webr}
 #| warning: false
 #| autorun: true
-meals <- read_csv("freeschoolmeals.csv")
-head(meals)
+meals <- read_csv("data/freeschoolmeals.csv")
+meals
 ```
 
----
-
-### FSM - Common issues
+## FSM - Common issues {.smaller}
 
 - sentinel outlier value: 9999 (represents suppressed values < 5)
 - NA values for missing data
@@ -229,9 +272,8 @@ mean(meals$FSMTaken)
 mean(meals$FSMTaken, na.rm=TRUE)
 ```
 
----
 
-### FSM - Filter out 9999 and handle NA
+## FSM - Filter out 9999 and handle NA {.smaller}
 
 ```{webr}
 #| warning: false
@@ -251,9 +293,8 @@ filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>%
   mutate(newFSMTaken = ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm = TRUE)), FSMTaken))
 ```
 
----
 
-### Missing values — simple imputation example
+## Missing values — simple imputation example {.smaller}
 
 ```{webr}
 #| warning: false
@@ -264,17 +305,31 @@ y[is.na(y)] <- mean(y, na.rm = TRUE)
 y
 ```
 
----
 
-## Further resources
+## Your turn: Experiment with different values {.smaller}
+
+::: your-turn
+Lets imagine someone asks you to obtain the mean of FSMTaken in the worst case scenario, where all the 9999 values (when the value is less than 5) are considered to be 4. Use the functions you have learned today to change those 9999 values to 4 (probably best to create a new column for this) and calculate the mean. Do the same thing, for the case scenario where FSMTaken for those 9999 values is considered to be 0.
+:::
+
+::: exercise-folder
+```{webr} 
+#| exercise: dplyr-summarise-fsmtaken
+meals
+```
+:::
+
+{{< countdown 10:00 >}}
+
+
+# Further resources {.smaller}
 
 - R for Data Science (Chapters 3, 8, 10)
 - RStudio data-wrangling cheatsheet
 - Datacamp tutorials and the links embedded in the worksheet
 
----
 
-## Important points (highlight)
+# Important points {.smaller}
 
 - Always inspect your data: summary(), str(), View()
 - Watch out for sentinel values (e.g. 9999) and decide how to treat them before computing summaries
