@@ -154,80 +154,234 @@
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#learning-objectives",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#learning-objectives",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Learning objectives",
-    "text": "Learning objectives\n\nManipulate data with the dplyr package\nJoin two datasets (tables) using a common key\nSpot issues in real datasets (outliers, missing values) and handle them",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#inspect-mpg",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#inspect-mpg",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Inspect mpg",
+    "text": "Inspect mpg\nWe’ll use the built-in mpg dataset for examples.",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#recap",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#recap",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Recap",
-    "text": "Recap\nOver the past three weeks we’ve looked at R basics, data structures, importing and basic visualisation. This week focuses on data transformation using the tidyverse, mainly dplyr.",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---pick-observations",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---pick-observations",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "filter() - Pick observations",
+    "text": "filter() - Pick observations\nSelect Audi cars? Engine displacement &gt; 2?",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#data-transformation-with-dplyr",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#data-transformation-with-dplyr",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Data transformation with dplyr",
-    "text": "Data transformation with dplyr\ndplyr gives concise verbs for common tasks:\n\nfilter() — pick rows\narrange() — reorder rows\nselect() — pick columns\nmutate() — create/transform columns\nsummarise() — collapse to summaries\n\nWe’ll use the built-in mpg dataset for examples.",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---multiple-conditions",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---multiple-conditions",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "filter() - Multiple conditions",
+    "text": "filter() - Multiple conditions\nCombine conditions with & and |, or use %in% for membership.",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-joins",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-joins",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Combining datasets (joins)",
-    "text": "Combining datasets (joins)\nUse the nycflights13 package to demonstrate joins between relational tables.",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-filter-multiple-condition",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-filter-multiple-condition",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Your turn: Filter multiple condition",
+    "text": "Your turn: Filter multiple condition\n\nCan you filter rows where the manufacturer is Audi OR the year of production (year) is 1999? Can you filter rows where the year of production (year) is 1999 and the manufacturer is NOT Audi?\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordering-rows",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordering-rows",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "arrange() — Reordering rows",
+    "text": "arrange() — Reordering rows",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-descending-and-multi-column-ordering",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-descending-and-multi-column-ordering",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "arrange() — Descending and multi-column ordering",
+    "text": "arrange() — Descending and multi-column ordering",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-result-piping",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-result-piping",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Your turn: Result piping",
+    "text": "Your turn: Result piping\n\nto better view the ordered tibble, pipe the results of the arrange function into the function View. Make sure that ties between countries with the same number of gold and silver medals are sorted based on the number of bronze medals.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-columns",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-columns",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "select() — Selecting columns",
+    "text": "select() — Selecting columns",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-with-pattern",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-with-pattern",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "select() — Selecting with pattern",
+    "text": "select() — Selecting with pattern",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combine-select-filter-arrange-with-pipes",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combine-select-filter-arrange-with-pipes",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Combine select + filter + arrange with pipes",
+    "text": "Combine select + filter + arrange with pipes",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-new-variables",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-new-variables",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "mutate() — New variables",
+    "text": "mutate() — New variables\nCreate a Total column in the medals data? Mutate only affects later steps in the pipe unless you assign it to a variable.",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "summarise()",
+    "text": "summarise()",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise-and-group_by",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise-and-group_by",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "summarise() and group_by()",
+    "text": "summarise() and group_by()",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-combine-mutate-and-summarise",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-combine-mutate-and-summarise",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Your turn: Combine mutate and summarise",
+    "text": "Your turn: Combine mutate and summarise\n\nLook at the second page of cheatsheet for useful functions to use with mutate and summarise. How many unique models do each manufacturer produce? Create a new column with a ratio of highway efficiency (hwy) vs city efficiency (cty) called HwyCtyRatio.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#explore-datasets",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#explore-datasets",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Explore datasets",
+    "text": "Explore datasets\nUse the nycflights13 package to demonstrate joins between relational tables.",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-left-join",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-left-join",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Combining datasets (left join)",
+    "text": "Combining datasets (left join)\nAdd full airline name to flights",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
     "href": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
+    "title": "Week 4 - Data cleaning and processing",
     "section": "Working with real data — Free School Meals (FSM)",
     "text": "Working with real data — Free School Meals (FSM)",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#further-resources",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#further-resources",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Further resources",
-    "text": "Further resources\n\nR for Data Science (Chapters 3, 8, 10)\nRStudio data-wrangling cheatsheet\nDatacamp tutorials and the links embedded in the worksheet",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---common-issues",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---common-issues",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "FSM - Common issues",
+    "text": "FSM - Common issues\n\nsentinel outlier value: 9999 (represents suppressed values &lt; 5)\nNA values for missing data\n\nCheck summary and mean behaviour:",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#important-points-highlight",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#important-points-highlight",
-    "title": "Week 4: Data cleaning and processing with R/RStudio",
-    "section": "Important points (highlight)",
-    "text": "Important points (highlight)\n\nAlways inspect your data: summary(), str(), View()\nWatch out for sentinel values (e.g. 9999) and decide how to treat them before computing summaries\nMissing values (NA) must be handled explicitly (na.rm or imputation)\ndplyr verbs (filter, select, arrange, mutate, summarise) + pipes make transformation readable and reproducible\nUse joins carefully: pick the right join (left/inner/full) and check for unexpected NAs after the join\nWhen sampling or random processes, set a seed to make results reproducible",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---filter-out-9999-and-handle-na",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---filter-out-9999-and-handle-na",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "FSM - Filter out 9999 and handle NA",
+    "text": "FSM - Filter out 9999 and handle NA\n\n\n\n\n\n\n\n\nOr use dplyr to keep NA and exclude 9999:",
     "crumbs": [
       "Slides",
-      "Week 4: Data cleaning and processing with R/RStudio"
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#missing-values-simple-imputation-example",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#missing-values-simple-imputation-example",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Missing values — simple imputation example",
+    "text": "Missing values — simple imputation example",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-experiment-with-different-values",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-experiment-with-different-values",
+    "title": "Week 4 - Data cleaning and processing",
+    "section": "Your turn: Experiment with different values",
+    "text": "Your turn: Experiment with different values\n\nLets imagine someone asks you to obtain the mean of FSMTaken in the worst case scenario, where all the 9999 values (when the value is less than 5) are considered to be 4. Use the functions you have learned today to change those 9999 values to 4 (probably best to create a new column for this) and calculate the mean. Do the same thing, for the case scenario where FSMTaken for those 9999 values is considered to be 0.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
+    "crumbs": [
+      "Slides",
+      "Week 4 - Data cleaning and processing"
     ]
   },
   {
