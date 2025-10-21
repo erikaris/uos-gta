@@ -1,9 +1,9 @@
 ---
-title: "SDS 366 Schedule Spring 2025"
+title: "IJC 437  2025"
 format: html
 ---
 
-## Lectures
+<!-- ## Lectures
 
 ### 1. Jan 14, 2025—Introduction
 
@@ -284,5 +284,5 @@ All projects are due by 11:00pm on the day they are due. Projects need to be sub
 - [Instructions (pdf)](assignments/Project_3_instructions.pdf)
 - [Project Template (qmd)](assignments/Project_3.qmd)
 - [Project Template (pdf)](assignments/Project_3.pdf)
-- [Grading rubric (pdf)](assignments/Project_3_rubric.pdf)
+- [Grading rubric (pdf)](assignments/Project_3_rubric.pdf) -->
 

@@ -1,16 +1,31 @@
 ---
-title: "Week 4 - Data cleaning and processing"
+title: "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
+subtitle: "Data Cleaning and Processing"
 author: "Erika Siregar"
+date: "22 October 2025"
+date-format: "D MMMM YYYY"  # Specifies the format: day, full month name, year
+institute: "University of Sheffield"  # Add institute field
 format:
   live-revealjs:
     theme: slides.scss
     title-slide-attributes:
       data-background-color: "#9cbbbd"
+    title-slide-contents: |
+      <!-- QR code in bottom right -->
+      <img src="< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/slides/week-4.html width=300 height=300 >&size=120x120"
+           alt="QR code to slides"
+           style="position: absolute; bottom: 40px; right: 40px; width: 120px; border: 3px solid white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+      <p style="position: absolute; bottom: 15px; right: 40px; font-size: 0.8em; color: white;">
+        Scan to open these slides
+      </p>
     transition: slide
     slide-number: true
     countdown:
       color_background: "#283c4d"
       color_text: "#ffffff"
+    chalkboard: true
+    footer: |
+          <img src="images/qrcode_ijc437w4.png" width="90" style="float:right; margin-right:80px;"/>
 resources:
   - ../data
 execute:
@@ -22,318 +37,286 @@ webr:
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Learning objectives {.smaller}
+# Scan to Access The Slide
+ {{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/slides/week-4.html width=300 height=300 >}}
 
-Over the past three weeks we've looked at R basics, data structures, importing and basic visualisation. This week focuses on data transformation using the tidyverse, mainly dplyr.
+ {{< countdown 00:30 >}}
 
-::: {.columns}
-::: {.column width="70%"}
-1. Manipulate data with the dplyr package
+# What We'll Do Today {.smaller}
 
-2. Join two datasets (tables) using a common key
+Looking back: so far, we've learned several things ...  <br /><br />
 
-3. Spot issues in real datasets (outliers, missing values) and handle them
+:::::: columns
+::: {.column width="75%"}
+<!-- Hover over this <abbr title="This is a tooltip!">text</abbr> -->
 
+Now, let's move on to learn:
+
+1. **data manipulation**  $\rightarrow$ using tidyverse's <abbr title="(1) how to pronounce dplyr?  (2) mention at least 2 packages in tidyverse">dplyr</abbr>. Meet the 5 famous functions (verbs): `filter()`, `arrange()`, `select()`, `mutate()`, `summarise()`. 
+2. **tables/datasets join** $\rightarrow$ basic SQL knowledge will be helpful. 
+3. **spot issues when working with real datasets (e.g. outliers and missing values)**
 :::
+
 ::: {.column width="5%"}
 :::
-::: {.column width="25%"}
-{{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/slides/week-4.html width=300 height=300 >}}
+
+::: {.column width="20%"}
+
 :::
-::: 
+::::::
 
-
-# Data transformation with dplyr {.smaller}
+# Part I: Data manipulation/transformation with dplyr {.smaller}
 
 dplyr gives concise verbs for common tasks:
 
-- filter() — pick rows
-- arrange() — reorder rows
-- select() — pick columns
-- mutate() — create/transform columns
-- summarise() — collapse to summaries
+-   `filter()` — pick rows
+-   `arrange()` — reorder rows
+-   `select()` — pick columns
+-   `mutate()` — create/transform columns
+-   `summarise()` — collapse to summaries $\rightarrow$ often must be preceded by `group_by()`
 
 
 ## Inspect mpg {.smaller}
 
-We'll use the built-in mpg dataset for examples.
+We'll use the built-in `mpg` dataset for examples. <br />
+Make sure you know some of useful [data inspection functions](https://github.com/erikaris/uos-gta/blob/main/intro-to-data-science/autumn-2025/data_inspection_cheatsheet.md). <br />
+Read more about mpg dataset [here](https://rdrr.io/cran/gamair/man/mpg.html). 
 
 ```{webr}
 #| warning: false
 #| autorun: true
-library(tidyverse)
+library(tidyverse)  # load library
+```
+
+```{webr}
+#| warning: false
+#| autorun: false
 str(mpg)
 ```
 
+## `filter()` - Select Observations/Rows {.smaller}
 
-## filter() - Pick observations {.smaller}
-
-Select Audi cars? Engine displacement > 2?
+Select certain manufacturer, displ, and year?
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 filter(mpg, manufacturer=="audi")
 filter(mpg, displ > 2)
-```
+filter(mpg, displ > 2 & cyl > 6)  # how to turn it into a pipe-dplyr way?
 
-
-## filter() - Multiple conditions {.smaller}
-
-Combine conditions with `&` and `|`, or use `%in%` for membership.
-
-```{webr}
-#| warning: false
-#| autorun: true
-filter(mpg, displ > 2 & cyl > 6)
+# Multiple conditions
 filter(mpg, manufacturer=="audi", year==1999)
 filter(mpg, manufacturer=="audi" & year==1999)
+filter(mpg, (manufacturer=="audi" | manufacturer=="chevrolet"), year==1999)
+filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999)
+
+# pipe it to count()
+filter(mpg, (manufacturer %in% c("audi","chevrolet")), year==1999) %>%
+   count(manufacturer)
+
+# filtering for sampling
+sample_frac(mpg, 0.05, replace=TRUE) # sample 5% of the data
+sample_n(mpg, 10, replace=TRUE) # sample of 10 rows
 ```
 
-## Your turn: Filter multiple condition {.smaller}
+<!-- ## Your turn: Filter multiple condition {.smaller}
 
 ::: your-turn
 Can you filter rows where the manufacturer is Audi OR the year of production (year) is 1999? Can you filter rows where the year of production (year) is 1999 and the manufacturer is NOT Audi?
 :::
 
 ::: exercise-folder
-```{webr} 
+```{webr}
 #| exercise: hist-y1-y2
 filter(mpg, ___)
 ```
 :::
 
-{{< countdown 10:00 >}}
+{{< countdown 10:00 >}} -->
 
-
-## arrange() — Reordering rows {.smaller}
+## `arrange()` — Reorder/Sort Rows {.smaller}
+What is the base R counterpart for `arrange()`?
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 rio2016Medals <- read_csv("data/Rio2016.csv")
 arrange(rio2016Medals, Country)
-```
-
-
-## arrange() — Descending and multi-column ordering {.smaller}
-
-```{webr}
-#| warning: false
-#| autorun: true
 arrange(rio2016Medals, desc(Country))
 arrange(rio2016Medals, desc(Gold), desc(Silver), desc(Bronze))
 ```
 
-
-## Your turn: Result piping {.smaller}
+<!-- ## Your turn: Result piping {.smaller}
 
 ::: your-turn
 to better view the ordered tibble, pipe the results of the arrange function into the function View. Make sure that ties between countries with the same number of gold and silver medals are sorted based on the number of bronze medals.
 :::
 
 ::: exercise-folder
-```{webr} 
+```{webr}
 #| exercise: dplyr-pipe-medals
 rio2016Medals
 ```
 :::
 
-{{< countdown 10:00 >}}
+{{< countdown 10:00 >}} -->
 
-
-## select() — Selecting columns {.smaller}
+## select() — Selecting Columns {.smaller}
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 select(mpg, manufacturer, hwy)
-```
+select(mpg, starts_with("d")) # Selecting with pattern
 
-
-## select() — Selecting with pattern {.smaller}
-
-```{webr}
-#| warning: false
-#| autorun: true
-select(mpg, starts_with("d"))
-```
-
-
-## Combine select + filter + arrange with pipes {.smaller}
-
-```{webr}
-#| warning: false
-#| autorun: true
+# Combine select + filter + arrange with pipes
 mpg %>% 
   select(manufacturer, hwy) %>% 
   filter(manufacturer != "chevrolet" & hwy >=20) %>%
   arrange(desc(manufacturer))
 ```
 
+## mutate() — Create New Variables {.smaller}
 
-## mutate() — New variables {.smaller}
-
-Create a Total column in the medals data?
-Mutate only affects later steps in the pipe unless you assign it to a variable.
+::: {.callout-note}
+The mutate function doesn’t change the original data, meaning the new column is only available to functions that are piped after the mutate. 
+:::
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 mutate(rio2016Medals, Total = Gold + Silver + Bronze)
 ```
 
-
-## summarise() {.smaller}
+## summarise() - Create Summary {.smaller}
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 summarise(mpg, avg = mean(hwy))
+
+# grouped-based summary
+mpg |> 
+   group_by(year, manufacturer) |> 
+   summarise(count = n())
 ```
 
-
-## summarise() and group_by() {.smaller}
+<!-- ## summarise() and group_by() {.smaller}
 
 ```{webr}
 #| warning: false
 #| autorun: true
-group_by(mpg, year, manufacturer) %>% summarise(count = n())
-```
 
+``` -->
 
-## Your turn: Combine mutate and summarise {.smaller}
+<!-- ## Your turn: Combine mutate and summarise {.smaller}
 
 ::: your-turn
 Look at the second page of cheatsheet for useful functions to use with mutate and summarise. How many unique models do each manufacturer produce? Create a new column with a ratio of highway efficiency (hwy) vs city efficiency (cty) called HwyCtyRatio.
 :::
 
 ::: exercise-folder
-```{webr} 
+```{webr}
 #| exercise: dplyr-summarise-hwyctyration
 mpg
 ```
 :::
 
-{{< countdown 10:00 >}}
+{{< countdown 10:00 >}} -->
 
+# Part II: Combining datasets
 
-# Combining datasets
+## Basic Idea {.smaller}
+Recommended reading material: [http://r4ds.had.co.nz/relational-data.html](http://r4ds.had.co.nz/relational-data.html)
 
+::: {layout-ncol=2}
+![Some of join types](images/join_types.png){width=60%}
 
-## Explore datasets {.smaller}
+![Venn Diagram](images/join-venn.png)
+:::
 
-Use the nycflights13 package to demonstrate joins between relational tables.
+## An Illustration {.smaller}
+:::::: columns
+::: {.column width="50%"}
+We have `flights2` and `airlines` table. 
 
+We want to have the full name of the airline in the `flights2` table rather than the carrier abbreviation. <br />
+How to achieve this?
+
+![](images/flight_airlines_join.png)
+:::
+
+::: {.column width="50%"}
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 library(nycflights13)
 
-nycflights13::airlines
-nycflights13::airports
+flights2 <- flights %>% 
+  select(year:day, hour, origin, dest, tailnum, carrier)
+
+flights2 %>% 
+  left_join(airlines, by = "carrier")
 ```
+:::
+::::::
 
 
-## Combining datasets (left join) {.smaller}
-
-Add full airline name to flights
-
-```{webr}
-#| warning: false
-#| autorun: true
-flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
-flights2 %>% left_join(airlines, by = "carrier")
-```
-
-# Spot issues in real datasets
+# Part III: Spot Issues in Real Datasets
 
 ## Working with real data — Free School Meals (FSM) {.smaller}
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 meals <- read_csv("data/freeschoolmeals.csv")
-meals
-```
+head(meals)
 
-## FSM - Common issues {.smaller}
-
-- sentinel outlier value: 9999 (represents suppressed values < 5)
-- NA values for missing data
-
-Check summary and mean behaviour:
-
-```{webr}
-#| warning: false
-#| autorun: true
+# check summary
 summary(meals$FSMTaken)
-mean(meals$FSMTaken)
-mean(meals$FSMTaken, na.rm=TRUE)
-```
+# significant difference between median & mean --> mean affected by outliers --> potential problem.
+# 17 NAs
 
+mean(meals$FSMTaken)  # NA
+mean(meals$FSMTaken, na.rm=TRUE) # NA removed, but mean is still suspiciously high.
+```
 
 ## FSM - Filter out 9999 and handle NA {.smaller}
 
 ```{webr}
 #| warning: false
-#| autorun: true
-actualFSMTaken <- meals$FSMTaken[meals$FSMTaken != 9999]
-length(actualFSMTaken)
-mean(actualFSMTaken, na.rm = TRUE)
+#| autorun: false
+meals |>
+   filter(FSMTaken != 999) |>
+   mean(na.rm = TRUE)
 ```
-
-Or use dplyr to keep NA and exclude 9999:
+<br /> Or keep NA and exclude 9999:
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% count()
 filter(meals, (FSMTaken < 9999 | is.na(FSMTaken))) %>% 
   mutate(newFSMTaken = ifelse(is.na(FSMTaken), floor(mean(FSMTaken, na.rm = TRUE)), FSMTaken))
 ```
 
-
-## Missing values — simple imputation example {.smaller}
+<br /> Missing values — simple imputation example.
 
 ```{webr}
 #| warning: false
-#| autorun: true
+#| autorun: false
 y <- c(4,5,6,NA)
 is.na(y)
 y[is.na(y)] <- mean(y, na.rm = TRUE)
 y
 ```
 
-
-## Your turn: Experiment with different values {.smaller}
-
-::: your-turn
-Lets imagine someone asks you to obtain the mean of FSMTaken in the worst case scenario, where all the 9999 values (when the value is less than 5) are considered to be 4. Use the functions you have learned today to change those 9999 values to 4 (probably best to create a new column for this) and calculate the mean. Do the same thing, for the case scenario where FSMTaken for those 9999 values is considered to be 0.
-:::
-
-::: exercise-folder
-```{webr} 
-#| exercise: dplyr-summarise-fsmtaken
-meals
-```
-:::
-
-{{< countdown 10:00 >}}
-
-
 # Further resources {.smaller}
 
-- R for Data Science (Chapters 3, 8, 10)
-- RStudio data-wrangling cheatsheet
-- Datacamp tutorials and the links embedded in the worksheet
+-   Check the list of resources on the last page of the worksheet (pdf)
+-   <span style="color:red">Erika's pick: </span>[Posit Cheatsheet](https://posit.co/resources/cheatsheets/)
 
 
-# Important points {.smaller}
-
-- Always inspect your data: summary(), str(), View()
-- Watch out for sentinel values (e.g. 9999) and decide how to treat them before computing summaries
-- Missing values (NA) must be handled explicitly (na.rm or imputation)
-- dplyr verbs (filter, select, arrange, mutate, summarise) + pipes make transformation readable and reproducible
-- Use joins carefully: pick the right join (left/inner/full) and check for unexpected NAs after the join
-- When sampling or random processes, set a seed to make results reproducible
+# That’s a wrap! {.smaller}
+Now it’s your turn to dive into the worksheet

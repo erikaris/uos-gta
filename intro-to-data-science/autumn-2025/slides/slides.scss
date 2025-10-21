@@ -32,6 +32,14 @@ section.has-light-background a, section.has-light-background a:hover {
   white-space: pre-wrap; 
 }
 
+.center-slide {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
 /* Match alignment of filename with code */
 .code-with-filename .code-with-filename-file {
   padding-left: 9px;
