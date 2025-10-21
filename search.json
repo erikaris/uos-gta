@@ -156,232 +156,111 @@
   {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#inspect-mpg",
     "href": "intro-to-data-science/autumn-2025/slides/week-4.html#inspect-mpg",
-    "title": "Week 4 - Data cleaning and processing",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
     "section": "Inspect mpg",
-    "text": "Inspect mpg\nWe’ll use the built-in mpg dataset for examples.",
+    "text": "Inspect mpg\nWe’ll use the built-in mpg dataset for examples.  Make sure you know some of useful data inspection functions.  Read more about mpg dataset here.",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---pick-observations",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---pick-observations",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "filter() - Pick observations",
-    "text": "filter() - Pick observations\nSelect Audi cars? Engine displacement &gt; 2?",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---select-observationsrows",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---select-observationsrows",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "filter() - Select Observations/Rows",
+    "text": "filter() - Select Observations/Rows\nSelect certain manufacturer, displ, and year?",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---multiple-conditions",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#filter---multiple-conditions",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "filter() - Multiple conditions",
-    "text": "filter() - Multiple conditions\nCombine conditions with & and |, or use %in% for membership.",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordersort-rows",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordersort-rows",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "arrange() — Reorder/Sort Rows",
+    "text": "arrange() — Reorder/Sort Rows\nWhat is the base R counterpart for arrange()?",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-filter-multiple-condition",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-filter-multiple-condition",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Your turn: Filter multiple condition",
-    "text": "Your turn: Filter multiple condition\n\nCan you filter rows where the manufacturer is Audi OR the year of production (year) is 1999? Can you filter rows where the year of production (year) is 1999 and the manufacturer is NOT Audi?\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordering-rows",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-reordering-rows",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "arrange() — Reordering rows",
-    "text": "arrange() — Reordering rows",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-descending-and-multi-column-ordering",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#arrange-descending-and-multi-column-ordering",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "arrange() — Descending and multi-column ordering",
-    "text": "arrange() — Descending and multi-column ordering",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-result-piping",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-result-piping",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Your turn: Result piping",
-    "text": "Your turn: Result piping\n\nto better view the ordered tibble, pipe the results of the arrange function into the function View. Make sure that ties between countries with the same number of gold and silver medals are sorted based on the number of bronze medals.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-columns",
     "href": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-columns",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "select() — Selecting columns",
-    "text": "select() — Selecting columns",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "select() — Selecting Columns",
+    "text": "select() — Selecting Columns",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-with-pattern",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#select-selecting-with-pattern",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "select() — Selecting with pattern",
-    "text": "select() — Selecting with pattern",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-create-new-variables",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-create-new-variables",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "mutate() — Create New Variables",
+    "text": "mutate() — Create New Variables\n\n\n\n\n\n\nNote\n\n\nThe mutate function doesn’t change the original data, meaning the new column is only available to functions that are piped after the mutate.",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combine-select-filter-arrange-with-pipes",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combine-select-filter-arrange-with-pipes",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Combine select + filter + arrange with pipes",
-    "text": "Combine select + filter + arrange with pipes",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise---create-summary",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise---create-summary",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "summarise() - Create Summary",
+    "text": "summarise() - Create Summary",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-new-variables",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#mutate-new-variables",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "mutate() — New variables",
-    "text": "mutate() — New variables\nCreate a Total column in the medals data? Mutate only affects later steps in the pipe unless you assign it to a variable.",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#basic-idea",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#basic-idea",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "Basic Idea",
+    "text": "Basic Idea\nRecommended reading material: http://r4ds.had.co.nz/relational-data.html\n\n\n\n\n\n\nSome of join types\n\n\n\n\n\n\n\nVenn Diagram",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "summarise()",
-    "text": "summarise()",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#an-illustration",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#an-illustration",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "An Illustration",
+    "text": "An Illustration\n\n\nWe have flights2 and airlines table.\nWe want to have the full name of the airline in the flights2 table rather than the carrier abbreviation.  How to achieve this?",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise-and-group_by",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#summarise-and-group_by",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "summarise() and group_by()",
-    "text": "summarise() and group_by()",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-combine-mutate-and-summarise",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-combine-mutate-and-summarise",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Your turn: Combine mutate and summarise",
-    "text": "Your turn: Combine mutate and summarise\n\nLook at the second page of cheatsheet for useful functions to use with mutate and summarise. How many unique models do each manufacturer produce? Create a new column with a ratio of highway efficiency (hwy) vs city efficiency (cty) called HwyCtyRatio.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#explore-datasets",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#explore-datasets",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Explore datasets",
-    "text": "Explore datasets\nUse the nycflights13 package to demonstrate joins between relational tables.",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-left-join",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-datasets-left-join",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Combining datasets (left join)",
-    "text": "Combining datasets (left join)\nAdd full airline name to flights",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
     "href": "intro-to-data-science/autumn-2025/slides/week-4.html#working-with-real-data-free-school-meals-fsm",
-    "title": "Week 4 - Data cleaning and processing",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
     "section": "Working with real data — Free School Meals (FSM)",
     "text": "Working with real data — Free School Meals (FSM)",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---common-issues",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---common-issues",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "FSM - Common issues",
-    "text": "FSM - Common issues\n\nsentinel outlier value: 9999 (represents suppressed values &lt; 5)\nNA values for missing data\n\nCheck summary and mean behaviour:",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
     "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---filter-out-9999-and-handle-na",
     "href": "intro-to-data-science/autumn-2025/slides/week-4.html#fsm---filter-out-9999-and-handle-na",
-    "title": "Week 4 - Data cleaning and processing",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
     "section": "FSM - Filter out 9999 and handle NA",
-    "text": "FSM - Filter out 9999 and handle NA\n\n\n\n\n\n\n\n\nOr use dplyr to keep NA and exclude 9999:",
+    "text": "FSM - Filter out 9999 and handle NA\n\n\n\n\n\n\n\n\n Or keep NA and exclude 9999:\n\n\n\n\n\n\n\n\n Missing values — simple imputation example.",
     "crumbs": [
       "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#missing-values-simple-imputation-example",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#missing-values-simple-imputation-example",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Missing values — simple imputation example",
-    "text": "Missing values — simple imputation example",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-experiment-with-different-values",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#your-turn-experiment-with-different-values",
-    "title": "Week 4 - Data cleaning and processing",
-    "section": "Your turn: Experiment with different values",
-    "text": "Your turn: Experiment with different values\n\nLets imagine someone asks you to obtain the mean of FSMTaken in the worst case scenario, where all the 9999 values (when the value is less than 5) are considered to be 4. Use the functions you have learned today to change those 9999 values to 4 (probably best to create a new column for this) and calculate the mean. Do the same thing, for the case scenario where FSMTaken for those 9999 values is considered to be 0.\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    −\n    +\n \n 10:00",
-    "crumbs": [
-      "Slides",
-      "Week 4 - Data cleaning and processing"
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
     ]
   },
   {
@@ -616,46 +495,6 @@
     "crumbs": [
       "Slides",
       "Introduction"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/syllabus.html",
-    "href": "intro-to-data-science/autumn-2025/syllabus.html",
-    "title": "SDS 366 Schedule Spring 2025",
-    "section": "",
-    "text": "Materials:\n\n\nSlides\n\nWorksheet 1: Introduction to Quarto\nWorksheet 2: Introduction to R\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides Part I (visualizing amounts)\nWorksheet Part I\nSlides Part II (telling a story)\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides Part I (pipe, sorting, filtering, mutating)\nWorksheet Part I\nSlides Part II (summarizing, pivoting, joining)\nWorksheet Part II\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet Part I (data cleaning)\nWorksheet Part II (missing data)\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides: Interactive plots\n\nWorksheet: Interactive plots\nSlides: Animations\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/syllabus.html#lectures",
-    "href": "intro-to-data-science/autumn-2025/syllabus.html#lectures",
-    "title": "SDS 366 Schedule Spring 2025",
-    "section": "",
-    "text": "Materials:\n\n\nSlides\n\nWorksheet 1: Introduction to Quarto\nWorksheet 2: Introduction to R\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides Part I (visualizing amounts)\nWorksheet Part I\nSlides Part II (telling a story)\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides Part I (pipe, sorting, filtering, mutating)\nWorksheet Part I\nSlides Part II (summarizing, pivoting, joining)\nWorksheet Part II\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet Part I (data cleaning)\nWorksheet Part II (missing data)\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet\n\n\n\n\n\nMaterials:\n\n\nSlides: Interactive plots\n\nWorksheet: Interactive plots\nSlides: Animations\n\n\n\n\n\nMaterials:\n\n\nSlides\n\nWorksheet",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/syllabus.html#homeworks",
-    "href": "intro-to-data-science/autumn-2025/syllabus.html#homeworks",
-    "title": "SDS 366 Schedule Spring 2025",
-    "section": "Homeworks",
-    "text": "Homeworks\nAll homeworks are due by 11:00pm on the day they are due. Homeworks need to be submitted as pdf files on Canvas.\n\nHomework 1 (due Jan 23, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 2 (due Jan 30, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 3 (due Feb 6, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 4 (due Feb 27, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 5 (due Mar 6, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 6 (due Apr 3, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF\n\n\n\nHomework 7 (due Apr 10, 2025)\n\nMaterials:\n\n\nQuarto template\nPDF",
-    "crumbs": [
-      "Syllabus"
-    ]
-  },
-  {
-    "objectID": "intro-to-data-science/autumn-2025/syllabus.html#projects",
-    "href": "intro-to-data-science/autumn-2025/syllabus.html#projects",
-    "title": "SDS 366 Schedule Spring 2025",
-    "section": "Projects",
-    "text": "Projects\nAll projects are due by 11:00pm on the day they are due. Projects need to be submitted on Canvas. Please carefully read the submission instructions for each project.\n\nProject 1 (due Feb 13, 2025)\n\nMaterials:\n\n\nInstructions (pdf)\nProject Template (qmd)\nProject Template (pdf)\nGrading rubric (pdf)\nExample project (pdf)\n\n\n\nProject 2 (due Mar 13, 2025)\n\nMaterials:\n\n\nInstructions (pdf)\nProject Template (qmd)\nProject Template (pdf)\nGrading rubric (pdf)\nGrading instructions (pdf)\n\n\n\nProject 3 (due Apr 17, 2025)\n\nMaterials:\n\n\nInstructions (pdf)\nProject Template (qmd)\nProject Template (pdf)\nGrading rubric (pdf)",
-    "crumbs": [
-      "Syllabus"
     ]
   },
   {
