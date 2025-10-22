@@ -421,11 +421,22 @@
     ]
   },
   {
-    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#bonus-challenge-for-anyone-who-dare-to-try",
-    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#bonus-challenge-for-anyone-who-dare-to-try",
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-dplyr-and-ggplot",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-dplyr-and-ggplot",
     "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
-    "section": "Bonus Challenge (For Anyone Who Dare to Try)",
-    "text": "Bonus Challenge (For Anyone Who Dare to Try)",
+    "section": "Combining dplyr and ggplot",
+    "text": "Combining dplyr and ggplot\n\n\nbabynames dataset:\n\n\n\n\n\n\n\n\n\nThe output that we want:\n\n\nGo to next slide to try out.",
+    "crumbs": [
+      "Slides",
+      "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
+    ]
+  },
+  {
+    "objectID": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-dplyr-and-ggplot-1",
+    "href": "intro-to-data-science/autumn-2025/slides/week-4.html#combining-dplyr-and-ggplot-1",
+    "title": "IJC437 Introduction to Data Science – Week 04 (Lab Session)",
+    "section": "Combining dplyr and ggplot",
+    "text": "Combining dplyr and ggplot",
     "crumbs": [
       "Slides",
       "IJC437 Introduction to Data Science – Week 04 (Lab Session)"
