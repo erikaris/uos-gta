@@ -40,15 +40,12 @@ webr:
 # Scan to Access The Slide
  {{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/slides/week-4.html width=300 height=300 >}}
 
- {{< countdown 00:30 >}}
+ <!-- {{< countdown 00:30 >}} -->
 
 # What We'll Do Today {.smaller}
-
-Looking back: so far, we've learned several things ...  <br /><br />
-
 :::::: columns
 ::: {.column width="75%"}
-<!-- Hover over this <abbr title="This is a tooltip!">text</abbr> -->
+Looking back: so far, we've learned several things ...  <br /><br />
 
 Now, let's move on to learn:
 
@@ -61,7 +58,7 @@ Now, let's move on to learn:
 :::
 
 ::: {.column width="20%"}
-
+{{< qrcode https://www.menti.com/albw5yqc18sm width=300 height=300 >}}
 :::
 ::::::
 
@@ -317,6 +314,22 @@ y
 -   Check the list of resources on the last page of the worksheet (pdf)
 -   <span style="color:red">Erika's pick: </span>[Posit Cheatsheet](https://posit.co/resources/cheatsheets/)
 
+## Bonus Challenge (For Anyone Who Dare to Try)
+```{webr} 
+#| exercise: dplyr-ggplot
+install.packages('babynames')
+library(babynames)
+
+babynames %>% 
+  group_by(year, sex) %>% 
+  summarise(births = sum(n)) %>% 
+  ungroup %>%    # ungroup equals to .groups = "drop"
+  ggplot(aes(x = year, y = births, color = sex)) +
+  geom_line() +
+  labs(title = "Estimated births by year")
+```
 
 # That’s a wrap! {.smaller}
 Now it’s your turn to dive into the worksheet
+<br/><br/>
+ <!-- {{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/worksheets/week-4.html width=300 height=300 >}} -->

@@ -6,7 +6,7 @@ engine: knitr
 webr:
   render-df: gt-interactive
   resources:
-    - https://raw.githubusercontent.com/erikaris/uos-gta/refs/heads/main/datasets/Rio2016.csv
+    - ../data
 ---
 
 {{< include ../../../_extensions/r-wasm/live/_knitr.qmd >}}
@@ -160,7 +160,7 @@ We’ll make use of the 2016 Rio Olympic Games medals table to show how we re-or
 ```{webr}
 #| warning: false
 #| autorun: true
-rio2016Medals<-read_csv("Rio2016.csv") # default separator is ','
+rio2016Medals<-read_csv("data/Rio2016.csv") # default separator is ','
 arrange(rio2016Medals, Country)
 ```
 
@@ -367,7 +367,8 @@ Finally, let’s just return to the Free School Meals (FSMs) dataset that we wor
 ```{webr}
 #| warning: false
 #| autorun: true
-View(meals)
+meals <- read_csv("data/freeschoolmeals.csv")
+meals
 ```
 
 If you scroll through the data a couple of things might stand out to you: 
