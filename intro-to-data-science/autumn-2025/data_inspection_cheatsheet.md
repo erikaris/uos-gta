@@ -38,7 +38,66 @@ A quick reference for inspecting datasets in R, including both **base R** and **
 6. analogy: You have a box. <br />
    a. `typeof()` tells you what the box is made of &rarr; e.g., wood, metal, plastic.  <br />
    b. `class()` tells you what the box is used for &rarr; e.g., lunchbox, toolbox, gift box.
-   
+
+#### Further explanation for class vs type:
+
+**What’s happening**
+1. In R, a **factor** is a way to represent **categorical data**, which often looks like text (e.g., film titles, colors, species).
+2. Internally, R **doesn’t store the actual strings**. It stores **integer codes**. Each unique string gets an integer:
+
+| String      | Internal code |
+| ----------- | ------------- |
+| "Inception" | 1             |
+| "Titanic"   | 2             |
+| "Avatar"    | 3             |
+
+3. The **labels** (the actual film titles) are stored separately, so when you print the factor, it looks like strings.
+
+---
+
+**Why `typeof()` says “integer”**
+
+`typeof()` reports **the underlying storage type**, not how R displays it.
+
+* For a factor: `typeof(factor_column)` → `"integer"`
+* But `class(factor_column)` → `"factor"`
+
+See the example below and notice how R prints the strings, but stores integers internally.
+
+```r
+movies <- factor(c("Inception", "Titanic", "Inception"))
+typeof(movies)  # "integer"   <- storage
+class(movies)   # "factor"    <- behavior/role
+movies
+# [1] Inception Titanic   Inception
+# Levels: Inception Titanic
+```
+---
+
+**How to get the actual strings**
+
+You can convert a factor to a character vector using `as.character()`:
+
+```r
+titles <- as.character(movies)
+typeof(titles)  # "character"
+class(titles)   # "character"
+titles
+# [1] "Inception" "Titanic" "Inception"
+```
+---
+**Quick summary**
+
+| Column type | typeof()  | class()   | Looks like | Notes                                        |
+| ----------- | --------- | --------- | ---------- | -------------------------------------------- |
+| factor      | integer   | factor    | strings    | Stored as integer codes, displayed as labels |
+| character   | character | character | strings    | Stored as actual strings                     |
+
+---
+**Rule of thumb:**
+
+> If a column **looks like text** but `typeof()` says `"integer"`, it’s probably a factor.
+
 ---
 
 ## 3. Summary Statistics
