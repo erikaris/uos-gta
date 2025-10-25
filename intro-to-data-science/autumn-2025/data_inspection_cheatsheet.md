@@ -27,7 +27,7 @@ A quick reference for inspecting datasets in R, including both **base R** and **
 | `typeof()` | Get internal type | `typeof(iris)` |
 
 
-*class vs type:*
+### class vs type:
 
 1. They describe the same thing, but at different levels.
 2. `typeof()`: related to the object's storage &rarr; how R saves it in memory. 
