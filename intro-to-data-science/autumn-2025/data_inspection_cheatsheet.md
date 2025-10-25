@@ -26,14 +26,18 @@ A quick reference for inspecting datasets in R, including both **base R** and **
 | `class()` | Get object class | `class(iris)` |
 | `typeof()` | Get internal type | `typeof(iris)` |
 
+
 *class vs type:*
+
 1. They describe the same thing, but at different levels.
 2. `typeof()`: related to the object's storage &rarr; how R saves it in memory. 
 3. `class()`: related to the object's behavior &rarr; how R behaves with it
 4. example:
+   
    a. `typeof(x)` → "double": R stores these numbers as double-precision floats in memory.
    b. `class(x)` → "numeric": R treats it as something you can do math with.
 6. analogy: You have a box.
+7. 
    a. `typeof()` tells you what the box is made of &rarr; e.g., wood, metal, plastic.
    b. `class()` tells you what the box is used for &rarr; e.g., lunchbox, toolbox, gift box.
    
