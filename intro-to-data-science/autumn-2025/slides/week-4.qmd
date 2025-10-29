@@ -58,7 +58,7 @@ Now, let's move on to learn:
 :::
 
 ::: {.column width="20%"}
-{{< qrcode https://www.menti.com/albw5yqc18sm width=300 height=300 >}}
+<!-- {{< qrcode https://www.menti.com/albw5yqc18sm width=300 height=300 >}} -->
 :::
 ::::::
 
@@ -309,12 +309,12 @@ y[is.na(y)] <- mean(y, na.rm = TRUE)
 y
 ```
 
-# Further resources {.smaller}
+<!-- # Further resources {.smaller}
 
 -   Check the list of resources on the last page of the worksheet (pdf)
--   <span style="color:red">Erika's pick: </span>[Posit Cheatsheet](https://posit.co/resources/cheatsheets/)
+-   <span style="color:red">Erika's pick: </span>[Posit Cheatsheet](https://posit.co/resources/cheatsheets/) -->
 
-# Bonus Challenge (For Anyone Who Dare to Try) {.smaller}
+<!-- # Bonus Challenge (For Anyone Who Dare to Try) {.smaller}
 
 ## Combining dplyr and ggplot {.smaller}
 :::::: columns
@@ -354,7 +354,7 @@ babynames %>%
   geom___() +
   labs(title = ___)
   ___
-```
+``` -->
 
 <!-- ```{webr} 
 #| exercise: dplyr-ggplot
@@ -372,6 +372,6 @@ babynames %>%
 ``` -->
 
 # That’s a wrap! {.smaller}
-Now it’s your turn to dive into the worksheet
+Now it’s your turn to dive into the worksheet.
 <br/><br/>
  <!-- {{< qrcode https://erikaris.github.io/uos-gta/intro-to-data-science/autumn-2025/worksheets/week-4.html width=300 height=300 >}} -->
