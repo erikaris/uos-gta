@@ -380,5 +380,3 @@ Instead of humans evaluating LLM output quality, you can use another LLM to do t
 > 💡 **Discussion nudge:** "Did your judge agree with your own assessment? Did swapping the order of summaries change the result? What does that tell us about using LLMs to evaluate other LLMs?"
 
 ---
-
-*Good luck today, Erika! You've got this. 🍀*
